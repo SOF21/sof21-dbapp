@@ -14,7 +14,7 @@ gem 'puma', '~> 3.0'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', :require => 'bcrypt'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -59,4 +59,4 @@ gem 'devise_token_auth', git: 'https://github.com/NaabZer/devise_token_auth.git'
 gem 'omniauth-cas'
 
 # Ruby version for Heroku
-ruby '2.6.0'
+ruby '2.6.6'

@@ -30,6 +30,9 @@
 # Intellij
 .idea/
 
+# VS code
+.vscode/
+
 ## File-based project format:
 *.iws
 
