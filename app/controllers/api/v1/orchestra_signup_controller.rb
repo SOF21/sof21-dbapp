@@ -1,6 +1,6 @@
 class API::V1::OrchestraSignupController < ApplicationController
-  LATE_REGISTRATION_START_DATE = Time.utc(2019, 3, 18)
-  LAST_REGISTRATION_DATE = Time.utc(2019, 5, 1)
+  LATE_REGISTRATION_START_DATE = Time.utc(2021, 3, 18)
+  LAST_REGISTRATION_DATE = Time.utc(2021, 5, 1)
   include ViewPermissionConcern
 
   before_action :authenticate_user!
