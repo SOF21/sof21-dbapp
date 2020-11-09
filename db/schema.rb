@@ -10,17 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190510195951) do
+ActiveRecord::Schema.define(version: 20201109192912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
-
-  create_table "active_funkis_shift_limits", force: :cascade do |t|
-    t.integer  "active_limit", default: 0
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
 
   create_table "amount_constraints", force: :cascade do |t|
     t.integer  "amount"
@@ -150,52 +144,6 @@ ActiveRecord::Schema.define(version: 20190510195951) do
     t.string   "question_eng", default: "", null: false
     t.text     "answer_eng",   default: "", null: false
     t.index ["faq_group_id"], name: "index_faqs_on_faq_group_id", using: :btree
-  end
-
-  create_table "funkis_applications", force: :cascade do |t|
-    t.string   "ssn",                             null: false
-    t.string   "phone",                           null: false
-    t.string   "tshirt_size",                     null: false
-    t.text     "allergies",       default: "",    null: false
-    t.boolean  "drivers_license", default: false, null: false
-    t.integer  "presale_choice",  default: 0,     null: false
-    t.datetime "terms_agreed_at"
-    t.integer  "user_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.index ["user_id"], name: "index_funkis_applications_on_user_id", using: :btree
-  end
-
-  create_table "funkis_categories", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.string   "funkis_name", null: false
-    t.string   "description", null: false
-    t.string   "points",      null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "funkis_shift_applications", force: :cascade do |t|
-    t.integer  "funkis_application_id"
-    t.integer  "funkis_shift_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.index ["funkis_application_id"], name: "index_funkis_shift_applications_on_funkis_application_id", using: :btree
-    t.index ["funkis_shift_id"], name: "index_funkis_shift_applications_on_funkis_shift_id", using: :btree
-  end
-
-  create_table "funkis_shifts", force: :cascade do |t|
-    t.string   "day",                             null: false
-    t.string   "time",                            null: false
-    t.integer  "points"
-    t.integer  "funkis_category_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.integer  "red_limit",          default: 0,  null: false
-    t.integer  "yellow_limit",       default: 0,  null: false
-    t.integer  "green_limit",        default: 0,  null: false
-    t.string   "date",               default: "", null: false
-    t.index ["funkis_category_id"], name: "index_funkis_shifts_on_funkis_category_id", using: :btree
   end
 
   create_table "lineups", force: :cascade do |t|
