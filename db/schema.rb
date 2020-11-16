@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201109192912) do
+ActiveRecord::Schema.define(version: 20201116190904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,58 @@ ActiveRecord::Schema.define(version: 20201109192912) do
     t.string   "question_eng", default: "", null: false
     t.text     "answer_eng",   default: "", null: false
     t.index ["faq_group_id"], name: "index_faqs_on_faq_group_id", using: :btree
+  end
+
+  create_table "funkis", force: :cascade do |t|
+    t.string   "name"
+    t.string   "liu_id"
+    t.string   "liu_card"
+    t.string   "mail"
+    t.string   "phone_number"
+    t.string   "post_address"
+    t.string   "association"
+    t.string   "tshirt_size"
+    t.string   "allergies"
+    t.string   "allergies_other"
+    t.string   "share_info"
+    t.boolean  "gdpr"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "funkis_application_id"
+    t.index ["funkis_application_id"], name: "index_funkis_on_funkis_application_id", using: :btree
+  end
+
+  create_table "funkis_applications", force: :cascade do |t|
+    t.datetime "first_day"
+    t.datetime "second_day"
+    t.datetime "third_day"
+    t.string   "workfriend"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "funkis_id"
+    t.integer  "first_post"
+    t.integer  "sec_post"
+    t.integer  "third_post"
+    t.index ["funkis_id"], name: "index_funkis_applications_on_funkis_id", using: :btree
+  end
+
+  create_table "funkis_categories", force: :cascade do |t|
+    t.string   "title"
+    t.string   "desc"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "funkis_timeslots_id"
+    t.index ["funkis_timeslots_id"], name: "index_funkis_categories_on_funkis_timeslots_id", using: :btree
+  end
+
+  create_table "funkis_timeslots", force: :cascade do |t|
+    t.datetime "time"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "funkis_category_id"
+    t.integer  "funkis_id"
+    t.index ["funkis_category_id"], name: "index_funkis_timeslots_on_funkis_category_id", using: :btree
+    t.index ["funkis_id"], name: "index_funkis_timeslots_on_funkis_id", using: :btree
   end
 
   create_table "lineups", force: :cascade do |t|
@@ -339,4 +391,5 @@ ActiveRecord::Schema.define(version: 20201109192912) do
   end
 
   add_foreign_key "discount_codes", "products"
+  add_foreign_key "funkis", "funkis_applications"
 end
