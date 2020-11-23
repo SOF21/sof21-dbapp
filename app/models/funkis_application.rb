@@ -1,14 +1,14 @@
 class FunkisApplication < ApplicationRecord
   belongs_to :funkis
-  has_one :first_post,
-          class_name: 'Funkis_Category',
+  belongs_to :first_post,
+          class_name: 'Funkis_Category', inverse_of: nil,
           foreign_key: 'first_post'
 
-  has_one :sec_post,
-          class_name: 'Funkis_Category',
-          foreign_key: 'sec_post'
+  belongs_to :second_post,
+          class_name: 'Funkis_Category', inverse_of: nil,
+          foreign_key: 'second_post'
 
-  has_one :third_post,
-          class_name: 'Funkis Category',
+  belongs_to :third_post,
+          class_name: 'Funkis Category', inverse_of: nil,
           foreign_key: 'third_post'
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201116190904) do
+ActiveRecord::Schema.define(version: 20201123201037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,22 +166,25 @@ ActiveRecord::Schema.define(version: 20201116190904) do
   end
 
   create_table "funkis_applications", force: :cascade do |t|
-    t.datetime "first_day"
-    t.datetime "second_day"
-    t.datetime "third_day"
     t.string   "workfriend"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "funkis_id"
-    t.integer  "first_post"
-    t.integer  "sec_post"
-    t.integer  "third_post"
+    t.date     "first_day"
+    t.date     "second_day"
+    t.date     "third_day"
+    t.integer  "first_post_id"
+    t.integer  "second_post_id"
+    t.integer  "third_post_id"
+    t.index ["first_post_id"], name: "index_funkis_applications_on_first_post_id", using: :btree
     t.index ["funkis_id"], name: "index_funkis_applications_on_funkis_id", using: :btree
+    t.index ["second_post_id"], name: "index_funkis_applications_on_second_post_id", using: :btree
+    t.index ["third_post_id"], name: "index_funkis_applications_on_third_post_id", using: :btree
   end
 
   create_table "funkis_categories", force: :cascade do |t|
     t.string   "title"
-    t.string   "desc"
+    t.string   "description"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.integer  "funkis_timeslots_id"
@@ -189,11 +192,12 @@ ActiveRecord::Schema.define(version: 20201116190904) do
   end
 
   create_table "funkis_timeslots", force: :cascade do |t|
-    t.datetime "time"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.integer  "funkis_category_id"
     t.integer  "funkis_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["funkis_category_id"], name: "index_funkis_timeslots_on_funkis_category_id", using: :btree
     t.index ["funkis_id"], name: "index_funkis_timeslots_on_funkis_id", using: :btree
   end
