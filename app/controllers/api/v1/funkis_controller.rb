@@ -35,7 +35,11 @@ class API::V1::FunkisController < ApplicationController
         :allergies,
         :allergies_other,
         :share_info,
-        :gdpr
+        :gdpr,
+        :funkis_application_id,
+        :association_name,
+        :liu_card,
+        :funkis_category_id
     )
   end
 end
