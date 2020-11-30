@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201130192901) do
+ActiveRecord::Schema.define(version: 20201130193619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,7 +162,9 @@ ActiveRecord::Schema.define(version: 20201130192901) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.integer  "funkis_application_id"
+    t.integer  "funkis_category_id"
     t.index ["funkis_application_id"], name: "index_funkis_on_funkis_application_id", using: :btree
+    t.index ["funkis_category_id"], name: "index_funkis_on_funkis_category_id", using: :btree
   end
 
   create_table "funkis_applications", force: :cascade do |t|
@@ -396,4 +398,5 @@ ActiveRecord::Schema.define(version: 20201130192901) do
 
   add_foreign_key "discount_codes", "products"
   add_foreign_key "funkis", "funkis_applications"
+  add_foreign_key "funkis", "funkis_categories"
 end
