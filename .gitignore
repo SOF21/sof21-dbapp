@@ -62,3 +62,5 @@ fabric.properties
 
 # Ignore vagrant files
 .vagrant/
+config/database.yml
+
