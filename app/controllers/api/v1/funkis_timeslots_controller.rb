@@ -17,7 +17,7 @@ class API::V1::FunkisTimeslotsController < ApplicationController
       }
     else
       render :status => 500, :json => {
-          message: funkis.errors
+          message: timeslot.errors
       }
     end
   end

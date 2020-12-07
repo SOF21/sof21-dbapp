@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201207203900) do
+ActiveRecord::Schema.define(version: 20201207215135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,11 +184,11 @@ ActiveRecord::Schema.define(version: 20201207203900) do
     t.index ["third_post_id"], name: "index_funkis_applications_on_third_post_id", using: :btree
   end
 
-  create_table "funkis_booking", force: :cascade do |t|
+  create_table "funkis_bookings", force: :cascade do |t|
     t.integer "funkis_id"
     t.integer "funkis_timeslot_id"
-    t.index ["funkis_id"], name: "index_funkis_booking_on_funkis_id", using: :btree
-    t.index ["funkis_timeslot_id"], name: "index_funkis_booking_on_funkis_timeslot_id", using: :btree
+    t.index ["funkis_id"], name: "index_funkis_bookings_on_funkis_id", using: :btree
+    t.index ["funkis_timeslot_id"], name: "index_funkis_bookings_on_funkis_timeslot_id", using: :btree
   end
 
   create_table "funkis_categories", force: :cascade do |t|

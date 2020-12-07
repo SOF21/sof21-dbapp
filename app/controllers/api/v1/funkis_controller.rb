@@ -15,10 +15,16 @@ class API::V1::FunkisController < ApplicationController
     application.funkis_id = funkis.id
     funkis.funkis_application_id = application.id
 
-    if funkis.save && application.save
-      render :status => 200, :json => {
-          message: 'Successfully saved Funkis.',
-      }
+    if funkis.save
+      if application.save
+        render :status => 200, :json => {
+            message: 'Successfully saved Funkis.',
+        }
+      else
+        render :status => 500, :json => {
+            message: application.errors
+        }
+      end
     else
       render :status => 500, :json => {
           message: funkis.errors

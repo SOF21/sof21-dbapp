@@ -17,7 +17,7 @@ class API::V1::FunkisCategoryController < ApplicationController
       }
     else
       render :status => 500, :json => {
-          message: funkis.errors
+          message: category.errors
       }
     end
   end
