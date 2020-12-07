@@ -192,5 +192,10 @@ if Rails.env.development? and FunkisCategory.count == 0 and FunkisTimeslot.count
       end_time: DateTime.new(2021, 5, 14, 16, 0)
   )
 
-
+  category_1.funkis_timeslots_id = 1
+  category_1.save
+  category_1.funkis_timeslots_id = 2
+  category_1.save
+  category_2.funkis_timeslots_id = 3
+  category_2.save
 end

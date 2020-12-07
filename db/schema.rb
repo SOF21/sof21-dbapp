@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201207194225) do
+ActiveRecord::Schema.define(version: 20201207203900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,6 +184,13 @@ ActiveRecord::Schema.define(version: 20201207194225) do
     t.index ["third_post_id"], name: "index_funkis_applications_on_third_post_id", using: :btree
   end
 
+  create_table "funkis_booking", force: :cascade do |t|
+    t.integer "funkis_id"
+    t.integer "funkis_timeslot_id"
+    t.index ["funkis_id"], name: "index_funkis_booking_on_funkis_id", using: :btree
+    t.index ["funkis_timeslot_id"], name: "index_funkis_booking_on_funkis_timeslot_id", using: :btree
+  end
+
   create_table "funkis_categories", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
@@ -197,11 +204,9 @@ ActiveRecord::Schema.define(version: 20201207194225) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.integer  "funkis_category_id"
-    t.integer  "funkis_id"
     t.datetime "start_time"
     t.datetime "end_time"
     t.index ["funkis_category_id"], name: "index_funkis_timeslots_on_funkis_category_id", using: :btree
-    t.index ["funkis_id"], name: "index_funkis_timeslots_on_funkis_id", using: :btree
   end
 
   create_table "lineups", force: :cascade do |t|

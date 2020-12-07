@@ -9,7 +9,6 @@ class API::V1::FunkisTimeslotsController < ApplicationController
   end
 
   def create
-
     timeslot = FunkisTimeslot.new(item_params)
 
     if timeslot.save
