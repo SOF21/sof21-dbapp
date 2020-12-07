@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201130193619) do
+ActiveRecord::Schema.define(version: 20201207194225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -399,4 +399,5 @@ ActiveRecord::Schema.define(version: 20201130193619) do
   add_foreign_key "discount_codes", "products"
   add_foreign_key "funkis", "funkis_applications"
   add_foreign_key "funkis", "funkis_categories"
+  add_foreign_key "funkis_categories", "funkis_timeslots", column: "funkis_timeslots_id"
 end

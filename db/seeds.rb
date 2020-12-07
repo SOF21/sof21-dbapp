@@ -5,6 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'date'
 
 
 
@@ -155,5 +156,41 @@ if Rails.env.development? and BaseProduct.count == 0 and Product.count == 0
     product_id: weekend_prod.id,
     code: 'test'
   )
+end
+
+if Rails.env.development? and FunkisCategory.count == 0 and FunkisTimeslot.count == 0
+  FunkisCategory.delete_all
+  FunkisTimeslot.delete_all
+
+  category_1 = FunkisCategory.create(
+      id: 1,
+      title: "Barfunkis"
+  )
+  category_2 = FunkisCategory.create(
+      id: 2,
+      title: "Byggfunkis"
+  )
+
+  timeslot_1 = FunkisTimeslot.create(
+      id: 1,
+      funkis_category_id: category_1.id,
+      start_time: DateTime.new(2021, 5, 14, 12, 0),
+      end_time: DateTime.new(2021, 5, 14, 16, 0)
+  )
+
+  timeslot_2 = FunkisTimeslot.create(
+      id: 2,
+      funkis_category_id: category_1.id,
+      start_time: DateTime.new(2021, 5, 14, 12, 0),
+      end_time: DateTime.new(2021, 5, 14, 16, 0)
+  )
+
+  timeslot_3 = FunkisTimeslot.create(
+      id: 3,
+      funkis_category_id: category_2.id,
+      start_time: DateTime.new(2021, 5, 14, 12, 0),
+      end_time: DateTime.new(2021, 5, 14, 16, 0)
+  )
+
 
 end
