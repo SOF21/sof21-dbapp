@@ -9,7 +9,7 @@ class API::V1::FunkisTimeslotsController < ApplicationController
   end
 
   def create
-    restrict_access
+
     timeslot = FunkisTimeslot.new(item_params)
 
     if timeslot.save
@@ -24,7 +24,7 @@ class API::V1::FunkisTimeslotsController < ApplicationController
   end
 
   def update
-    restrict_access
+
 
     timeslot = FunkisTimeslot.find(params[:id])
 

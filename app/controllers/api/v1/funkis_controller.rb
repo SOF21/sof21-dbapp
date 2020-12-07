@@ -9,7 +9,6 @@ class API::V1::FunkisController < ApplicationController
   end
 
   def create
-    restrict_access
     # Horrible, but so is Ruby
     funkis = Funkis.new(item_params_funkis)
     application = FunkisApplication.new(item_params_application)
@@ -28,7 +27,6 @@ class API::V1::FunkisController < ApplicationController
   end
 
   def update
-    restrict_access
 
     funkis = Funkis.find(params[:id])
 

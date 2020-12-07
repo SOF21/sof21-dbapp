@@ -9,7 +9,6 @@ class API::V1::FunkisCategoryController < ApplicationController
   end
 
   def create
-    restrict_access
     category = FunkisCategory.new(item_params)
 
     if category.save
@@ -24,8 +23,6 @@ class API::V1::FunkisCategoryController < ApplicationController
   end
 
   def update
-    restrict_access
-
     category = FunkisCategory.find(params[:id])
 
     if category.update(item_params)
