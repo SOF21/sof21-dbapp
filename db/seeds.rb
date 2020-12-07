@@ -158,7 +158,10 @@ if Rails.env.development? and BaseProduct.count == 0 and Product.count == 0
   )
 end
 
-if Rails.env.development? and FunkisCategory.count == 0 and FunkisTimeslot.count == 0
+if Rails.env.development?
+  Funkis.delete_all
+  FunkisApplication.delete_all
+  FunkisBooking.delete_all
   FunkisCategory.delete_all
   FunkisTimeslot.delete_all
 
@@ -169,6 +172,11 @@ if Rails.env.development? and FunkisCategory.count == 0 and FunkisTimeslot.count
   category_2 = FunkisCategory.create(
       id: 2,
       title: "Byggfunkis"
+  )
+
+  category_3 = FunkisCategory.create(
+      id: 3,
+      title: "Fuskfunkis"
   )
 
   timeslot_1 = FunkisTimeslot.create(
@@ -192,11 +200,32 @@ if Rails.env.development? and FunkisCategory.count == 0 and FunkisTimeslot.count
       end_time: DateTime.new(2021, 5, 14, 16, 0)
   )
 
+  timeslot_4 = FunkisTimeslot.create(
+      id: 4,
+      funkis_category_id: category_3.id,
+      start_time: DateTime.new(2021, 5, 14, 12, 0),
+      end_time: DateTime.new(2021, 5, 14, 16, 0)
+  )
+
   funkis = Funkis.create(
       id: 1,
       name: "Tester One",
       liu_id: "teson100"
   )
+
+  application_1 = FunkisApplication.create(
+      id: 1,
+      funkis_id: 1,
+      first_day: DateTime.new(2021, 5, 14, 0,0),
+      second_day: DateTime.new(2021, 5, 15, 0,0),
+      third_day: DateTime.new(2021, 5, 13, 0,0,),
+      first_post_id: 1,
+      second_post_id: 2,
+      third_post_id: 3
+  )
+
+  funkis.funkis_application_id = 1
+  funkis.save
 
   booking1 = FunkisBooking.create(
       funkis_id: 1,
