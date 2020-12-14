@@ -9,25 +9,16 @@ class API::V1::FunkisController < ApplicationController
   end
 
   def create
-    # Horrible, but so is Ruby
-    funkis = Funkis.new(item_params_funkis)
-    application = FunkisApplication.new(item_params_application)
-    application.funkis_id = funkis.id
-    funkis.funkis_application_id = application.id
+    @funkis = Funkis.new(item_params_funkis)
+    @funkis.create_funkis_application(item_params_application)
 
-    if funkis.save
-      if application.save
-        render :status => 200, :json => {
-            message: 'Successfully saved Funkis.',
-        }
-      else
-        render :status => 500, :json => {
-            message: application.errors
-        }
-      end
+    if @funkis.save
+      render :status => 200, :json => {
+        message: 'Successfully saved Funkis.',
+      }
     else
       render :status => 500, :json => {
-          message: funkis.errors
+        message: @funkis.errors
       }
     end
   end
