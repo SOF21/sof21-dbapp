@@ -5,7 +5,12 @@ class API::V1::FunkisController < ApplicationController
 
   def show
     @funkis = Funkis.find(params[:id])
-    render :json => @funkis, :except => [:updated_at, :created_at]
+    if @funkis.funkis_category_id
+      @category = FunkisCategory.find(@funkis.funkis_category_id)
+      render :json => @funkis.attributes.merge({"funkis_category" => @category.title})
+    else
+      render :json => @funkis
+    end
   end
 
   def create
@@ -25,11 +30,10 @@ class API::V1::FunkisController < ApplicationController
   end
 
   def update
+    @funkis = Funkis.find(params[:id])
 
-    funkis = Funkis.find(params[:id])
-
-    if funkis.update(item_params_funkis)
-      redirect_to api_v1_funkis_url(funkis)
+    if @funkis.update(item_params_funkis)
+      redirect_to api_v1_funkis_url(@funkis)
     else
       raise 'Unable to save page'
     end
