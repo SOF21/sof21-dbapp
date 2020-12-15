@@ -64,6 +64,7 @@ class API::V1::FunkisController < ApplicationController
         :share_info,
         :gdpr,
         :funkis_application_id,
+        :funkis_category_id,
         :association_name,
         :liu_card
     )
