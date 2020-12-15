@@ -1,6 +1,16 @@
 class API::V1::FunkisController < ApplicationController
   def index
-    render :json => Funkis.all, :except => [:updated_at, :created_at]
+    @result = []
+    Funkis.all.each do |funkis|
+      if funkis.funkis_category_id
+        category = FunkisCategory.find(funkis.funkis_category_id)
+        @result << funkis.attributes.merge({"funkis_category" => category.title})
+      else
+        @result << funkis
+      end
+
+    end
+    render :json => @result
   end
 
   def show
