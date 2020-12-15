@@ -4,13 +4,14 @@ class API::V1::FunkisController < ApplicationController
   end
 
   def show
-    funkis = Funkis.find(params[:id])
-    render :json => funkis, :except => [:updated_at, :created_at]
+    @funkis = Funkis.find(params[:id])
+    render :json => @funkis, :except => [:updated_at, :created_at]
   end
 
   def create
     @funkis = Funkis.new(item_params_funkis)
-    @funkis.create_funkis_application(item_params_application)
+    @funkis.build_funkis_application(item_params_application)
+    @funkis.funkis_application_id = @funkis.funkis_application.id
 
     if @funkis.save
       render :status => 200, :json => {
