@@ -22,6 +22,16 @@ class API::V1::FunkisApplicationsController < ApplicationController
     restrict_access
   end
 
+  def update
+    @fapplication = FunkisApplication.find(params[:id])
+
+    if @fapplication.update(item_params)
+      redirect_to api_v1_funkis_url(@fapplication)
+    else
+      raise 'Unable to save page'
+    end
+  end
+
   def item_params
     params.require(:item).permit(
         :funkis_id,
