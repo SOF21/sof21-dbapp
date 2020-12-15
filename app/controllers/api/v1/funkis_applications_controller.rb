@@ -4,8 +4,18 @@ class API::V1::FunkisApplicationsController < ApplicationController
   end
 
   def show
-    fapplication = FunkisApplication.find(params[:id])
-    render :json => fapplication, :except => [:updated_at, :created_at]
+    @fapplication = FunkisApplication.find(params[:id])
+    categories = {}
+    if @fapplication.first_post_id
+      categories["first_post"] = @fapplication.first_post.title
+    end
+    if @fapplication.second_post_id
+      categories["second_post"] = @fapplication.second_post.title
+    end
+    if @fapplication.third_post_id
+      categories["third_post"] = @fapplication.third_post.title
+    end
+    render :json => @fapplication.attributes.merge(categories), :except => [:updated_at, :created_at]
   end
 
   def create
