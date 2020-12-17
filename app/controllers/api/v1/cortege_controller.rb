@@ -100,7 +100,12 @@ class API::V1::CortegeController < ApplicationController
 
     params.require(:item).permit(
         :approved,
-        :status
+        :status,
+        :feedback,
+        :security_feedback,
+        :info_mail,
+        :electricity,
+        :other_comments
     )
   end
 end
