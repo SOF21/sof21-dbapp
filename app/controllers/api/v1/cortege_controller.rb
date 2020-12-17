@@ -12,7 +12,7 @@ class API::V1::CortegeController < ApplicationController
   end
 
   def create
-    disable_feature from: '2017-02-27'
+    disable_feature from: '2021-08-30'
 
     unless current_user.cortege.nil?
       raise 'Cannot create another cortege application'
@@ -72,7 +72,7 @@ class API::V1::CortegeController < ApplicationController
       if cortege.user.present?
         cortege.user.purchased_items.each do |item|
           case item.product.base_product.name
-            when 'Makrobygge', 'Microbygge', 'Fribygge'
+            when 'Makrobygge', 'Fribygge'
               cortege.paid = true
               cortege.save
           end
@@ -84,12 +84,14 @@ class API::V1::CortegeController < ApplicationController
   def item_params
     params.require(:item).permit(
         :name,
-        :student_association,
         :participant_count,
         :cortege_type,
         :contact_phone,
+        :contact_name
         :idea,
-        :comments
+        :theme_connection,
+        :image_url,
+        :gdpr,
     )
   end
 
