@@ -117,11 +117,11 @@ ActiveRecord::Schema.define(version: 20201217172055) do
     t.string   "image_url",                                        null: false
     t.string   "theme_connection",                                 null: false
     t.boolean  "gdpr",                         default: false
-    t.string   "feedback",                                         null: false
-    t.string   "security_feedback",                                null: false
+    t.string   "feedback",                     default: "",        null: false
+    t.string   "security_feedback",            default: "",        null: false
     t.boolean  "info_mail",                    default: false,     null: false
     t.boolean  "electricity",                  default: false,     null: false
-    t.string   "other_comments",                                   null: false
+    t.string   "other_comments",               default: "",        null: false
     t.index ["user_id"], name: "index_corteges_on_user_id", using: :btree
   end
 
