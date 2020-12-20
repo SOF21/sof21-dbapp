@@ -19,7 +19,16 @@ class API::V1::FunkisApplicationsController < ApplicationController
   end
 
   def create
-    restrict_access
+    @fapplication = FunkisApplication.new(item_params)
+    if @fapplication.save
+      render :status => 200, :json => {
+        message: 'Successfully saved FunkisApplication.',
+      }
+    else
+      render :status => 500, :json => {
+        message: @fapplication.errors
+      }
+    end
   end
 
   def update
@@ -40,7 +49,8 @@ class API::V1::FunkisApplicationsController < ApplicationController
         :third_day,
         :first_post_id,
         :second_post_id,
-        :third_post_id
+        :third_post_id,
+        :user_id
     )
   end
 end
