@@ -43,7 +43,7 @@ class API::V1::FunkisController < ApplicationController
     @funkis = Funkis.find(params[:id])
 
     if @funkis.update(item_params_funkis)
-      redirect_to api_v1_funkis_url(@funkis)
+      redirect_to api_v1_funkis_url(status: 303) and return
     else
       raise 'Unable to save page'
     end
