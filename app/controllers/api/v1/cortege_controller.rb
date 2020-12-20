@@ -87,7 +87,7 @@ class API::V1::CortegeController < ApplicationController
         :participant_count,
         :cortege_type,
         :contact_phone,
-        :contact_name
+        :contact_name,
         :idea,
         :theme_connection,
         :image_url,
