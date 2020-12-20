@@ -77,7 +77,8 @@ class API::V1::FunkisController < ApplicationController
         :third_day,
         :first_post_id,
         :second_post_id,
-        :third_post_id
+        :third_post_id,
+        :user_id
     )
   end
 end
