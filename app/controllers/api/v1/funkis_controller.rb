@@ -2,11 +2,15 @@ class API::V1::FunkisController < ApplicationController
   def index
     @result = []
     Funkis.all.each do |funkis|
+      result = funkis.as_json
       if funkis.funkis_category_id
         category = FunkisCategory.find(funkis.funkis_category_id)
-        @result << funkis.attributes.merge({"funkis_category" => category.title})
-      else
-        @result << funkis
+        result = result.merge({"funkis_category" => category.title})
+      if FunkisBooking.where(funkis_id: funkis.id).exists?(conditions = :none)
+        timeslots = FunkisBooking.where(funkis_id: funkis.id)
+        result = result.merge({"timeslots" => timeslots})
+      end
+      @result << result
       end
 
     end
@@ -15,12 +19,16 @@ class API::V1::FunkisController < ApplicationController
 
   def show
     @funkis = Funkis.find(params[:id])
+    result = @funkis.as_json
     if @funkis.funkis_category_id
-      @category = FunkisCategory.find(@funkis.funkis_category_id)
-      render :json => @funkis.attributes.merge({"funkis_category" => @category.title})
-    else
-      render :json => @funkis
+      category = FunkisCategory.find(@funkis.funkis_category_id)
+      result = result.merge({"funkis_category" => category.title})
     end
+    if FunkisBooking.where(funkis_id: params[:id]).exists?(conditions = :none)
+      timeslots = FunkisBooking.where(funkis_id: params[:id])
+      result = result.merge({"timeslots" => timeslots})
+    end
+    render :json => result
   end
 
   def create
