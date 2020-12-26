@@ -32,18 +32,24 @@ class API::V1::FunkisController < ApplicationController
   end
 
   def create
-    @funkis = Funkis.new(item_params_funkis)
-    @funkis.build_funkis_application(item_params_application)
-    @funkis.funkis_application_id = @funkis.funkis_application.id
-
-    if @funkis.save
-      render :status => 200, :json => {
-        message: 'Successfully saved Funkis.',
+    if Funkis.where(liu_id: item_params_funkis[:liu_id]).exists?
+      render :status => 500, :json => {
+        message: "Funkis application already exists.",
       }
     else
-      render :status => 500, :json => {
-        message: @funkis.errors
-      }
+      @funkis = Funkis.new(item_params_funkis)
+      @funkis.build_funkis_application(item_params_application)
+      @funkis.funkis_application_id = @funkis.funkis_application.id
+
+      if @funkis.save
+        render :status => 200, :json => {
+          message: 'Successfully saved Funkis.',
+        }
+      else
+        render :status => 500, :json => {
+          message: @funkis.errors
+        }
+      end
     end
   end
 
