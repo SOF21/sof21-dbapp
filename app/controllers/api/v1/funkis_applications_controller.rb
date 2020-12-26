@@ -41,6 +41,19 @@ class API::V1::FunkisApplicationsController < ApplicationController
     end
   end
 
+  def get_by_userid
+    fapplication = FunkisApplication.find_by user_id:(params[:id])
+    if fapplication.nil?
+      render :status => 404, :json => {
+        message: fapplication.errors
+      }
+    else
+      render :status => 200, :json => fapplication
+    end
+
+
+  end
+
   def item_params
     params.require(:item).permit(
         :funkis_id,
