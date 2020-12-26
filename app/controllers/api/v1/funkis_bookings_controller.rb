@@ -9,13 +9,13 @@ class API::V1::FunkisBookingsController < ApplicationController
   end
 
   def get_timeslots
-    timeslots = FunkisBooking.find_all_by_funkis_id(params[:id])
-    render :json => timeslots, except => [:updated_at, :created_at]
+    timeslots = FunkisBooking.where(funkis_id: params[:id])
+    render :json => timeslots
   end
 
   def get_funkis
-    funkis = FunkisBooking.find_all_by_funkis_timeslot_id(params[:id])
-    render :json => funkis, except => [:updated_at, :created_at]
+    funkis = FunkisBooking.where(funkis_timeslot_id: params[:id])
+    render :json => funkis
   end
 
   def create
@@ -38,7 +38,7 @@ class API::V1::FunkisBookingsController < ApplicationController
   def item_params
     params.require(:item).permit(
         :funkis_id,
-        :timeslot_id
+        :funkis_timeslot_id
     )
   end
 end

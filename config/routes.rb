@@ -45,14 +45,14 @@ Rails.application.routes.draw do
 
       resources :funkis
       resources :funkis_applications do
-        get 'by_userid', action: 'get_by_userid', on: :collection
+        get 'by_userid/:id', action: 'get_by_userid', on: :collection
       end
 
       resources :funkis_category
       resources :funkis_timeslots
       resources :funkis_bookings do
-        get 'timeslots_for_funkis', action: 'get_timeslots', on: :collection
-        get 'funkis_for_timeslots', action: 'get_funkis', on: :collection
+        get 'timeslots_for_funkis/:id', action: 'get_timeslots', on: :collection
+        get 'funkis_for_timeslots/:id', action: 'get_funkis', on: :collection
       end
 
       resources :lineups do
