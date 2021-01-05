@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201217172055) do
+ActiveRecord::Schema.define(version: 20210105174459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(version: 20201217172055) do
     t.integer  "first_post_id"
     t.integer  "second_post_id"
     t.integer  "third_post_id"
+    t.integer  "user_id"
     t.index ["first_post_id"], name: "index_funkis_applications_on_first_post_id", using: :btree
     t.index ["funkis_id"], name: "index_funkis_applications_on_funkis_id", using: :btree
     t.index ["second_post_id"], name: "index_funkis_applications_on_second_post_id", using: :btree
@@ -277,6 +278,7 @@ ActiveRecord::Schema.define(version: 20201217172055) do
     t.boolean  "is_late_registration", default: false, null: false
     t.integer  "orchestra_role"
     t.integer  "arrival_date"
+    t.string   "pickup_with"
     t.index ["orchestra_id"], name: "index_orchestra_signups_on_orchestra_id", using: :btree
     t.index ["user_id"], name: "index_orchestra_signups_on_user_id", using: :btree
   end
