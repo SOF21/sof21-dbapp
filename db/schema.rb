@@ -10,17 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190510195951) do
+ActiveRecord::Schema.define(version: 20201217192356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
-
-  create_table "active_funkis_shift_limits", force: :cascade do |t|
-    t.integer  "active_limit", default: 0
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
 
   create_table "amount_constraints", force: :cascade do |t|
     t.integer  "amount"
@@ -108,19 +102,26 @@ ActiveRecord::Schema.define(version: 20190510195951) do
   end
 
   create_table "corteges", force: :cascade do |t|
-    t.string   "name",                limit: 30,                     null: false
-    t.string   "student_association"
-    t.integer  "participant_count",              default: 0,         null: false
-    t.integer  "cortege_type",                                       null: false
-    t.string   "contact_phone",                                      null: false
-    t.text     "idea",                                               null: false
-    t.text     "comments"
-    t.boolean  "approved",                       default: false,     null: false
-    t.string   "status",                         default: "pending", null: false
+    t.string   "name",              limit: 30,                     null: false
+    t.integer  "participant_count",            default: 0,         null: false
+    t.integer  "cortege_type",                                     null: false
+    t.string   "contact_phone",                                    null: false
+    t.text     "idea",                                             null: false
+    t.boolean  "approved",                     default: false,     null: false
+    t.string   "status",                       default: "pending", null: false
     t.integer  "user_id"
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.boolean  "paid",                           default: false,     null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.boolean  "paid",                         default: false,     null: false
+    t.string   "contact_name",      limit: 40,                     null: false
+    t.string   "image_url",                                        null: false
+    t.string   "theme_connection",                                 null: false
+    t.boolean  "gdpr",                         default: false
+    t.string   "feedback",                                         null: false
+    t.string   "security_feedback",                                null: false
+    t.boolean  "info_mail",                    default: false,     null: false
+    t.boolean  "electricity",                  default: false,     null: false
+    t.string   "other_comments",                                   null: false
     t.index ["user_id"], name: "index_corteges_on_user_id", using: :btree
   end
 
@@ -152,50 +153,69 @@ ActiveRecord::Schema.define(version: 20190510195951) do
     t.index ["faq_group_id"], name: "index_faqs_on_faq_group_id", using: :btree
   end
 
+  create_table "funkis", force: :cascade do |t|
+    t.string   "name"
+    t.string   "liu_id"
+    t.string   "liu_card"
+    t.string   "mail"
+    t.string   "phone_number"
+    t.string   "post_address"
+    t.string   "association_name"
+    t.string   "tshirt_size"
+    t.string   "allergies"
+    t.string   "allergies_other"
+    t.string   "share_info"
+    t.boolean  "gdpr"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.integer  "funkis_application_id"
+    t.integer  "funkis_category_id"
+    t.boolean  "marked_done",           default: false
+    t.index ["funkis_application_id"], name: "index_funkis_on_funkis_application_id", using: :btree
+    t.index ["funkis_category_id"], name: "index_funkis_on_funkis_category_id", using: :btree
+  end
+
   create_table "funkis_applications", force: :cascade do |t|
-    t.string   "ssn",                             null: false
-    t.string   "phone",                           null: false
-    t.string   "tshirt_size",                     null: false
-    t.text     "allergies",       default: "",    null: false
-    t.boolean  "drivers_license", default: false, null: false
-    t.integer  "presale_choice",  default: 0,     null: false
-    t.datetime "terms_agreed_at"
+    t.string   "workfriend"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "funkis_id"
+    t.date     "first_day"
+    t.date     "second_day"
+    t.date     "third_day"
+    t.integer  "first_post_id"
+    t.integer  "second_post_id"
+    t.integer  "third_post_id"
     t.integer  "user_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.index ["user_id"], name: "index_funkis_applications_on_user_id", using: :btree
+    t.index ["first_post_id"], name: "index_funkis_applications_on_first_post_id", using: :btree
+    t.index ["funkis_id"], name: "index_funkis_applications_on_funkis_id", using: :btree
+    t.index ["second_post_id"], name: "index_funkis_applications_on_second_post_id", using: :btree
+    t.index ["third_post_id"], name: "index_funkis_applications_on_third_post_id", using: :btree
+  end
+
+  create_table "funkis_bookings", force: :cascade do |t|
+    t.integer "funkis_id"
+    t.integer "funkis_timeslot_id"
+    t.index ["funkis_id"], name: "index_funkis_bookings_on_funkis_id", using: :btree
+    t.index ["funkis_timeslot_id"], name: "index_funkis_bookings_on_funkis_timeslot_id", using: :btree
   end
 
   create_table "funkis_categories", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.string   "funkis_name", null: false
-    t.string   "description", null: false
-    t.string   "points",      null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "title"
+    t.string   "desc"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "funkis_timeslots_id"
+    t.index ["funkis_timeslots_id"], name: "index_funkis_categories_on_funkis_timeslots_id", using: :btree
   end
 
-  create_table "funkis_shift_applications", force: :cascade do |t|
-    t.integer  "funkis_application_id"
-    t.integer  "funkis_shift_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.index ["funkis_application_id"], name: "index_funkis_shift_applications_on_funkis_application_id", using: :btree
-    t.index ["funkis_shift_id"], name: "index_funkis_shift_applications_on_funkis_shift_id", using: :btree
-  end
-
-  create_table "funkis_shifts", force: :cascade do |t|
-    t.string   "day",                             null: false
-    t.string   "time",                            null: false
-    t.integer  "points"
+  create_table "funkis_timeslots", force: :cascade do |t|
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "funkis_category_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.integer  "red_limit",          default: 0,  null: false
-    t.integer  "yellow_limit",       default: 0,  null: false
-    t.integer  "green_limit",        default: 0,  null: false
-    t.string   "date",               default: "", null: false
-    t.index ["funkis_category_id"], name: "index_funkis_shifts_on_funkis_category_id", using: :btree
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.index ["funkis_category_id"], name: "index_funkis_timeslots_on_funkis_category_id", using: :btree
   end
 
   create_table "lineups", force: :cascade do |t|
@@ -258,6 +278,7 @@ ActiveRecord::Schema.define(version: 20190510195951) do
     t.boolean  "is_late_registration", default: false, null: false
     t.integer  "orchestra_role"
     t.integer  "arrival_date"
+    t.string   "pickup_with"
     t.index ["orchestra_id"], name: "index_orchestra_signups_on_orchestra_id", using: :btree
     t.index ["user_id"], name: "index_orchestra_signups_on_user_id", using: :btree
   end
@@ -391,4 +412,6 @@ ActiveRecord::Schema.define(version: 20190510195951) do
   end
 
   add_foreign_key "discount_codes", "products"
+  add_foreign_key "funkis", "funkis_applications"
+  add_foreign_key "funkis", "funkis_categories"
 end
