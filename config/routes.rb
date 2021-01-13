@@ -44,10 +44,13 @@ Rails.application.routes.draw do
       end
 
       resources :funkis
-      resources :funkis_shift do
-        get 'export_applications', on: :collection
+      resources :funkis_applications
+      resources :funkis_category
+      resources :funkis_timeslots
+      resources :funkis_bookings do
+        get 'timeslots_for_funkis', action: 'get_timeslots', on: :collection
+        get 'funkis_for_timeslots', action: 'get_funkis', on: :collection
       end
-      resources :funkis_application
 
       resources :lineups do
         get 'artists_from_lineups', action: 'get_artists', on: :collection
