@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210105174459) do
+ActiveRecord::Schema.define(version: 20210118174409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 20210105174459) do
     t.boolean  "info_mail",                    default: false,     null: false
     t.boolean  "electricity",                  default: false,     null: false
     t.string   "other_comments",               default: "",        null: false
+    t.string   "contact_mail"
     t.index ["user_id"], name: "index_corteges_on_user_id", using: :btree
   end
 
@@ -278,7 +279,7 @@ ActiveRecord::Schema.define(version: 20210105174459) do
     t.boolean  "is_late_registration", default: false, null: false
     t.integer  "orchestra_role"
     t.integer  "arrival_date"
-    t.string   "pickup_with"
+    t.boolean  "pickup_with",          default: false
     t.index ["orchestra_id"], name: "index_orchestra_signups_on_orchestra_id", using: :btree
     t.index ["user_id"], name: "index_orchestra_signups_on_user_id", using: :btree
   end
