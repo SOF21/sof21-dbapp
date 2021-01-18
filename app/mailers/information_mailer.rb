@@ -1,8 +1,22 @@
 class InformationMailer < ApplicationMailer
-  def funkis_confirmation(application)
-    @user = application.user
-    @application = application
+  Time.zone = "Stockholm"
+  def funkis_confirmation(funkis)
+    @funkis = funkis
 
-    mail(to: @user.email, subject: 'SOF19: Anmäld till funkis-pass')
+    mail(to: @funkis.mail, subject: 'SOF21: Anmäld till funkis-pass')
+  end
+
+  def funkis_booked(funkis)
+    @funkis = funkis
+    @category = FunkisCategory.find(funkis.funkis_category_id)
+    @timeslots = []
+    bookings = FunkisBooking.where(funkis_id: funkis.id)
+    bookings.each do |booking|
+      @timeslots << FunkisTimeslot.find(booking.funkis_timeslot_id)
+    end
+
+
+    mail(to: @funkis.mail, subject: 'SOF21: Bokad till funkis-pass')
+
   end
 end

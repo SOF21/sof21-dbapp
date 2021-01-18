@@ -57,6 +57,7 @@ class API::V1::FunkisController < ApplicationController
     @funkis = Funkis.find(params[:id])
 
     if @funkis.update(item_params_funkis)
+      attempt_to_finalize_funkis(@funkis)
       redirect_to api_v1_funkis_url(status: 303) and return
     else
       raise 'Unable to save page'
@@ -64,6 +65,12 @@ class API::V1::FunkisController < ApplicationController
   end
 
   private
+
+  def attempt_to_finalize_funkis(funkis)
+    if funkis.marked_done?
+      InformationMailer.funkis_booked(funkis).deliver_now
+    end
+  end
 
   def item_params_funkis
     params.require(:item).permit(
