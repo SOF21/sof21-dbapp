@@ -1,3 +1,4 @@
+# Used for corteges sponsored by firms, students don't pay
 class API::V1::CaseCortegeController < ApplicationController
   include ViewPermissionConcern
 
