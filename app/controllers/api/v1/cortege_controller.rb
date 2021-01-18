@@ -88,6 +88,7 @@ class API::V1::CortegeController < ApplicationController
         :cortege_type,
         :contact_phone,
         :contact_name,
+        :contact_mail,
         :idea,
         :theme_connection,
         :image_url,
