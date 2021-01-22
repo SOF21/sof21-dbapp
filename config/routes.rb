@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       resources :funkis_bookings do
         get 'timeslots_for_funkis/:id', action: 'get_timeslots', on: :collection
         get 'funkis_for_timeslots/:id', action: 'get_funkis', on: :collection
+        delete 'destroy_by_ids/:fid/:tid', action: 'destroy_by_ids', on: :collection
       end
 
       resources :lineups do
