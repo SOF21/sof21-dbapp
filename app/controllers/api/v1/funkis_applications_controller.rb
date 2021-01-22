@@ -45,7 +45,7 @@ class API::V1::FunkisApplicationsController < ApplicationController
     fapplication = FunkisApplication.find_by user_id:(params[:id])
     if fapplication.nil?
       render :status => 404, :json => {
-        message: fapplication.errors
+        message: 'Not found'
       }
     else
       render :status => 200, :json => fapplication
