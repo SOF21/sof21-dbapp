@@ -35,10 +35,19 @@ class API::V1::FunkisBookingsController < ApplicationController
   def update
   end
 
+  def destroy
+    booking = FunkisBooking.find(params[:id])
+    booking.destroy
+    head :no_content
+  end
+
+  private
   def item_params
     params.require(:item).permit(
         :funkis_id,
         :funkis_timeslot_id
     )
   end
+
+
 end
