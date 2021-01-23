@@ -5,14 +5,13 @@ class API::V1::FunkisController < ApplicationController
       result = funkis.as_json
       if funkis.funkis_category_id
         category = FunkisCategory.find(funkis.funkis_category_id)
-        result = result.merge({"funkis_category" => category.title})
-      if FunkisBooking.where(funkis_id: funkis.id).exists?(conditions = :none)
-        timeslots = FunkisBooking.where(funkis_id: funkis.id)
-        result = result.merge({"timeslots" => timeslots})
+        result["category"] = category.title
+        if FunkisBooking.where(funkis_id: funkis.id).exists?(conditions = :none)
+          timeslots = FunkisBooking.where(funkis_id: funkis.id)
+          result["timeslots"] = timeslots
+        end
       end
       @result << result
-      end
-
     end
     render :json => @result
   end
