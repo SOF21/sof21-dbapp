@@ -67,7 +67,7 @@ class API::V1::FunkisController < ApplicationController
 
   def attempt_to_finalize_funkis(funkis)
     if funkis.marked_done? and not funkis.booking_sent?
-      InformationMailer.funkis_booked(funkis).deliver_now
+      FunkisMailer.funkis_booked(funkis).deliver_now
       funkis.booking_sent = true
       funkis.save
     end

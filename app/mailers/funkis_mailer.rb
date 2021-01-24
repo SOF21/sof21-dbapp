@@ -1,4 +1,4 @@
-class InformationMailer < ApplicationMailer
+class FunkisMailer < ApplicationMailer
   Time.zone = "Stockholm"
   def funkis_confirmation(funkis)
     @funkis = funkis
