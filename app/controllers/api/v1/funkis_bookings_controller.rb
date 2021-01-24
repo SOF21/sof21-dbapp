@@ -39,7 +39,9 @@ class API::V1::FunkisBookingsController < ApplicationController
     funkis_id = params[:fid]
     funkis_timeslot_id = params[:tid]
     booking = FunkisBooking.where(funkis_id: funkis_id, funkis_timeslot_id: funkis_timeslot_id).first
-    booking.destroy
+    if booking
+      booking.destroy
+    end
     head :no_content
   end
 
