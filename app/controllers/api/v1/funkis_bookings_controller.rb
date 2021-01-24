@@ -35,8 +35,10 @@ class API::V1::FunkisBookingsController < ApplicationController
   def update
   end
 
-  def destroy
-    booking = FunkisBooking.find(params[:id])
+  def destroy_by_ids
+    funkis_id = params[:fid]
+    funkis_timeslot_id = params[:tid]
+    booking = FunkisBooking.where(funkis_id: funkis_id, funkis_timeslot_id: funkis_timeslot_id).first
     booking.destroy
     head :no_content
   end
