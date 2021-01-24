@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210119194103) do
+ActiveRecord::Schema.define(version: 20210119194205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,6 +173,7 @@ ActiveRecord::Schema.define(version: 20210119194103) do
     t.integer  "funkis_application_id"
     t.integer  "funkis_category_id"
     t.boolean  "marked_done",           default: false
+    t.boolean  "booking_sent",          default: false
     t.index ["funkis_application_id"], name: "index_funkis_on_funkis_application_id", using: :btree
     t.index ["funkis_category_id"], name: "index_funkis_on_funkis_category_id", using: :btree
   end
@@ -193,6 +194,7 @@ ActiveRecord::Schema.define(version: 20210119194103) do
     t.index ["funkis_id"], name: "index_funkis_applications_on_funkis_id", using: :btree
     t.index ["second_post_id"], name: "index_funkis_applications_on_second_post_id", using: :btree
     t.index ["third_post_id"], name: "index_funkis_applications_on_third_post_id", using: :btree
+    t.index ["user_id"], name: "index_funkis_applications_on_user_id", using: :btree
   end
 
   create_table "funkis_bookings", force: :cascade do |t|
