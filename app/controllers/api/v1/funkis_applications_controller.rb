@@ -63,7 +63,8 @@ class API::V1::FunkisApplicationsController < ApplicationController
         :first_post_id,
         :second_post_id,
         :third_post_id,
-        :user_id
+        :user_id,
+        :partner_id
     )
   end
 end

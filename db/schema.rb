@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210119194205) do
+ActiveRecord::Schema.define(version: 20210125181103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 20210119194205) do
     t.integer  "second_post_id"
     t.integer  "third_post_id"
     t.integer  "user_id"
+    t.string   "parnter_id"
     t.index ["first_post_id"], name: "index_funkis_applications_on_first_post_id", using: :btree
     t.index ["funkis_id"], name: "index_funkis_applications_on_funkis_id", using: :btree
     t.index ["second_post_id"], name: "index_funkis_applications_on_second_post_id", using: :btree
