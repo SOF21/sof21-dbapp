@@ -42,7 +42,7 @@ class API::V1::FunkisController < ApplicationController
 
       if @funkis.save
         render :status => 200, :json => {
-          message: 'Successfully saved Funkis.',
+          message: 'Successfully saved Funkis',
         }
       else
         render :status => 500, :json => {
@@ -57,9 +57,13 @@ class API::V1::FunkisController < ApplicationController
 
     if @funkis.update(item_params_funkis)
       attempt_to_finalize_funkis(@funkis)
-      redirect_to api_v1_funkis_url(status: 303) and return
+      render :status => 200, :json => {
+        message: 'Successfully updated Funkis',
+      }
     else
-      raise 'Unable to save page'
+      render :status => 500, :json => {
+        message: @funkis.errors
+      }
     end
   end
 
