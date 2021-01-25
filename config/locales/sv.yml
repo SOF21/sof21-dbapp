@@ -1,4 +1,8 @@
 sv:
+  time:
+    datetime:
+      formats:
+        default: "%Y-%m-%d %H:%M %z"
   activerecord:
     errors:
       models:
