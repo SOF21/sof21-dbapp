@@ -6,10 +6,10 @@ class API::V1::FunkisController < ApplicationController
       if funkis.funkis_category_id
         category = FunkisCategory.find(funkis.funkis_category_id)
         result["category"] = category.title
-        if FunkisBooking.where(funkis_id: funkis.id).exists?(conditions = :none)
-          timeslots = FunkisBooking.where(funkis_id: funkis.id)
-          result["timeslots"] = timeslots
-        end
+      end
+      if FunkisBooking.where(funkis_id: funkis.id).exists?(conditions = :none)
+        timeslots = FunkisBooking.where(funkis_id: funkis.id)
+        result["timeslots"] = timeslots
       end
       @result << result
     end
