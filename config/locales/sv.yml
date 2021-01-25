@@ -1,10 +1,10 @@
 sv:
   time:
     formats:
-      default: "%H:%M %z"
+      default: "%H:%M"
     datetime:
       formats:
-        default: "%Y-%m-%d %H:%M %z"
+        default: "%Y-%m-%d %H:%M"
   activerecord:
     errors:
       models:
