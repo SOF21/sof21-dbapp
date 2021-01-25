@@ -21,6 +21,8 @@
 
 en:
   time:
+    formats:
+      default: "%H:%M %z"
     datetime:
       formats:
         default: "%Y-%m-%d %H:%M %z"
