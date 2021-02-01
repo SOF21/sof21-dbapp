@@ -102,19 +102,28 @@ ActiveRecord::Schema.define(version: 20210119194205) do
   end
 
   create_table "corteges", force: :cascade do |t|
-    t.string   "name",                limit: 30,                     null: false
-    t.string   "student_association"
-    t.integer  "participant_count",              default: 0,         null: false
-    t.integer  "cortege_type",                                       null: false
-    t.string   "contact_phone",                                      null: false
-    t.text     "idea",                                               null: false
-    t.text     "comments"
-    t.boolean  "approved",                       default: false,     null: false
-    t.string   "status",                         default: "pending", null: false
+    t.string   "name",              limit: 30,                     null: false
+    t.integer  "participant_count",            default: 0,         null: false
+    t.integer  "cortege_type",                                     null: false
+    t.string   "contact_phone",                                    null: false
+    t.text     "idea",                                             null: false
+    t.boolean  "approved",                     default: false,     null: false
+    t.string   "status",                       default: "pending", null: false
     t.integer  "user_id"
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
-    t.boolean  "paid",                           default: false,     null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.boolean  "paid",                         default: false,     null: false
+    t.string   "contact_name",      limit: 40,                     null: false
+    t.string   "image_url",                                        null: false
+    t.string   "theme_connection",                                 null: false
+    t.boolean  "gdpr",                         default: false
+    t.string   "feedback",                     default: "",        null: false
+    t.string   "security_feedback",            default: "",        null: false
+    t.boolean  "info_mail",                    default: false,     null: false
+    t.boolean  "electricity",                  default: false,     null: false
+    t.string   "other_comments",               default: "",        null: false
+    t.string   "contact_mail"
+    t.text     "flags",                        default: [],                     array: true
     t.index ["user_id"], name: "index_corteges_on_user_id", using: :btree
   end
 
@@ -197,7 +206,7 @@ ActiveRecord::Schema.define(version: 20210119194205) do
 
   create_table "funkis_categories", force: :cascade do |t|
     t.string   "title"
-    t.string   "description"
+    t.string   "desc"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.integer  "funkis_timeslots_id"
@@ -273,6 +282,7 @@ ActiveRecord::Schema.define(version: 20210119194205) do
     t.boolean  "is_late_registration", default: false, null: false
     t.integer  "orchestra_role"
     t.integer  "arrival_date"
+    t.boolean  "pickup_with",          default: false
     t.index ["orchestra_id"], name: "index_orchestra_signups_on_orchestra_id", using: :btree
     t.index ["user_id"], name: "index_orchestra_signups_on_user_id", using: :btree
   end
@@ -408,5 +418,4 @@ ActiveRecord::Schema.define(version: 20210119194205) do
   add_foreign_key "discount_codes", "products"
   add_foreign_key "funkis", "funkis_applications"
   add_foreign_key "funkis", "funkis_categories"
-  add_foreign_key "funkis_categories", "funkis_timeslots", column: "funkis_timeslots_id"
 end
