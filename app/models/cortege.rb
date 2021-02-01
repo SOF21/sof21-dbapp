@@ -3,8 +3,6 @@ class Cortege < ApplicationRecord
   has_many :cortege_memberships
   has_many :members, through: :cortege_memberships, source: :user
 
-  after_initialize -> { self. flags.blank? ? self. flags.push('0') : self. flags }
-
   def has_owner?(owner)
     user == owner
   end
