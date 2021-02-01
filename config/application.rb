@@ -49,6 +49,7 @@ module SofDbapp
 
     # Fallback to English locale when Swedish translation is missing.
     config.i18n.fallbacks = [:en]
+    config.time_zone = "Stockholm"
 
 
 

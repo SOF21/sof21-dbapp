@@ -44,12 +44,16 @@ Rails.application.routes.draw do
       end
 
       resources :funkis
-      resources :funkis_applications
+      resources :funkis_applications do
+        get 'by_userid/:id', action: 'get_by_userid', on: :collection
+      end
+
       resources :funkis_category
       resources :funkis_timeslots
       resources :funkis_bookings do
-        get 'timeslots_for_funkis', action: 'get_timeslots', on: :collection
-        get 'funkis_for_timeslots', action: 'get_funkis', on: :collection
+        get 'timeslots_for_funkis/:id', action: 'get_timeslots', on: :collection
+        get 'funkis_for_timeslots/:id', action: 'get_funkis', on: :collection
+        delete 'destroy_by_ids/:fid/:tid', action: 'destroy_by_ids', on: :collection
       end
 
       resources :lineups do
