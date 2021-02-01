@@ -41,6 +41,7 @@ class API::V1::FunkisController < ApplicationController
       @funkis.funkis_application_id = @funkis.funkis_application.id
 
       if @funkis.save
+        FunkisMailer.funkis_confirmation(funkis).deliver_now
         render :status => 200, :json => {
           message: 'Successfully saved Funkis.',
         }
