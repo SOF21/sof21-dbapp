@@ -99,6 +99,10 @@ class API::V1::FunkisController < ApplicationController
       FunkisMailer.funkis_booked(funkis).deliver_now
       funkis.booking_sent = true
       funkis.save
+    elsif not funkis.marked_done? and funkis.booking_sent?
+      FunkisMailer.funkis_unbooked(funkis).deliver_now
+      funkis.booking_sent = false
+      funkis.save
     end
   end
 
