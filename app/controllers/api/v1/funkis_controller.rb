@@ -100,7 +100,8 @@ class API::V1::FunkisController < ApplicationController
         :first_post_id,
         :second_post_id,
         :third_post_id,
-        :user_id
+        :user_id,
+        :workfriend_id
     )
   end
 end
