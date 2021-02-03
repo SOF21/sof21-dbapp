@@ -43,10 +43,13 @@ Rails.application.routes.draw do
         post 'modify_membership', action: 'modify_membership', on: :member
       end
 
-      resources :funkis
+      resources :funkis do
+        put 'check_in/liu_id/:id', action: 'check_in_with_liuid', on: :collection
+        put 'check_in/liu_card_number/:id', action: 'check_in_with_liu_card', on: :collection
+      end
       resources :funkis_applications do
         get 'by_userid/:id', action: 'get_by_userid', on: :collection
-      end
+      end      
 
       resources :funkis_category
       resources :funkis_timeslots
