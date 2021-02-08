@@ -67,6 +67,32 @@ class API::V1::FunkisController < ApplicationController
     end
   end
 
+  def check_in_with_liu_card
+      funkis = Funkis.find_by liu_card:(params[:id])
+      if funkis.nil?
+        render :status => 404, :json => {
+          message: 'No funkis found with entered LiU card'
+        }
+      else
+        funkis.checked_in = !(params[:id] == funkis.liu_card)
+        funkis.save!
+        render :status => '200'
+      end
+  end
+
+  def check_in_with_liuid
+    funkis = Funkis.find_by liu_id:(params[:id])
+      if funkis.nil?
+        render :status => 404, :json => {
+          message: 'No funkis found with that LiU id'
+        }
+      else
+        funkis.checked_in = !funkis.checked_in
+        funkis.save!
+        render :status => '200'
+      end
+  end
+
   private
 
   def attempt_to_finalize_funkis(funkis)
