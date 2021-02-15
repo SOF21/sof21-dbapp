@@ -112,6 +112,15 @@ class API::V1::FunkisController < ApplicationController
     head :no_content
   end
 
+  def destroy
+    require_admin_permission AdminPermission::ALL
+
+    @funkis = Funkis.find(params[:id])
+    @funkis.destroy!
+
+    head :no_content
+  end
+
   private
 
   def attempt_to_finalize_funkis(funkis)
