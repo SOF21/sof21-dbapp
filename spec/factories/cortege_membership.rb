@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :cortege_membership, :class => 'CortegeMembership' do
     user
     cortege

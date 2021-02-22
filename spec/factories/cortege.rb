@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :name do |n|
     "cortege#{n}"
   end
@@ -16,13 +16,13 @@ FactoryGirl.define do
     name
     student_association
     contact_phone
-    cortege_type 0
-    idea 'nonsense'
+    cortege_type { 0 }
+    idea { 'nonsense' }
     user
 
     trait :with_members do
       transient do
-        members_count 5
+        members_count { 5 }
       end
     end
   end
