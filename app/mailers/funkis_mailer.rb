@@ -22,4 +22,9 @@ class FunkisMailer < ApplicationMailer
 
     mail(to: @funkis.mail, subject: 'SOF21: Avbokad för funkis-pass')
   end
+
+  def funkis_deleted(funkis)
+    @funkis = funkis
+    mail(to :@funkis.mail, subject: 'SOF21: Funkisansökan borttagen')
+  end
 end
