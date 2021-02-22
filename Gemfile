@@ -4,11 +4,11 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', :groups => [:development, :test]
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+gem 'rails', '~> 5.2.4', '>= 5.2.4.1'
 # Use PostgreSQL for Heroku database
 gem 'pg'
 # Use Puma as the app server
-gem 'puma', '~> 3.0'
+gem 'puma', '~> 5.2'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
