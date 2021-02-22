@@ -24,7 +24,7 @@ class API::V1::FunkisController < ApplicationController
 
   def show
     @funkis = Funkis.find(params[:id])
-    require_ownership @funkis
+    require_ownership_or_admin_permission @funkis, AdminPermission::LIST_FUNKIS_APPLICATIONS
 
     result = @funkis.as_json
     if @funkis.funkis_category_id
@@ -47,6 +47,7 @@ class API::V1::FunkisController < ApplicationController
       @funkis = Funkis.new(item_params_funkis)
       @funkis.build_funkis_application(item_params_application)
       @funkis.funkis_application_id = @funkis.funkis_application.id
+      @funkis.user = current_user
 
       if @funkis.save
         FunkisMailer.funkis_confirmation(funkis).deliver_now
@@ -63,7 +64,7 @@ class API::V1::FunkisController < ApplicationController
 
   def update
     @funkis = Funkis.find(params[:id])
-    require_ownership @funkis
+    require_ownership_or_admin_permission @funkis, AdminPermission::LIST_FUNKIS_APPLICATIONS
 
     if @funkis.update(item_params_funkis)
       attempt_to_finalize_funkis(@funkis)
