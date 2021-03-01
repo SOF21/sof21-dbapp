@@ -74,9 +74,9 @@ class API::V1::FunkisController < ApplicationController
           message: 'No funkis found with entered LiU card'
         }
       else
-        funkis.checked_in = !(params[:id] == funkis.liu_card)
+        funkis.checked_in = !funkis.checked_in
         funkis.save!
-        render :status => '200'
+        render :status => 200, :json => funkis.as_json
       end
   end
 
@@ -89,7 +89,7 @@ class API::V1::FunkisController < ApplicationController
       else
         funkis.checked_in = !funkis.checked_in
         funkis.save!
-        render :status => '200'
+        render :status => '200', :json => funkis.as_json
       end
   end
 
