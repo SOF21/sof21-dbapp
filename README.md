@@ -58,3 +58,27 @@ To get local smtp server up and running for local development use [mailcatcher](
 If you're looking at a ruby on rails project for the first time this might be a
 little confusing. [Here's](https://www.javatpoint.com/ruby-on-rails-directory-structure) a short intro.
 For more extensive info; Google is your friend.
+
+## Docker (devstack)
+To build the backend container and setup the Docker environment, run
+```
+docker-compose -f devstack.yml build
+```
+You might need to do it if you make certain changes to the code, 
+not sure which, but rule of thumb is if you change a config, rebuild.
+
+And if it's already built and you just wanna start the environment, run
+```
+docker-compose -f devstack.yml up
+```
+
+And because the person who made the compose-file is lazy, the database
+is wiped on restart of the service
+
+And to get to the database you can do
+```
+docker-compose -f devstack.yml exec db su postgres -c psql
+```
+
+Included in the devstack is a Mailcatcher on ```localhost:1080```
+
