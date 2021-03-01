@@ -43,21 +43,11 @@ Rails.application.routes.draw do
         post 'modify_membership', action: 'modify_membership', on: :member
       end
 
-      resources :funkis do
-        put 'check_in/liu_id/:id', action: 'check_in_with_liuid', on: :collection
-        put 'check_in/liu_card_number/:id', action: 'check_in_with_liu_card', on: :collection
+      resources :funkis
+      resources :funkis_shift do
+        get 'export_applications', on: :collection
       end
-      resources :funkis_applications do
-        get 'by_userid/:id', action: 'get_by_userid', on: :collection
-      end      
-
-      resources :funkis_category
-      resources :funkis_timeslots
-      resources :funkis_bookings do
-        get 'timeslots_for_funkis/:id', action: 'get_timeslots', on: :collection
-        get 'funkis_for_timeslots/:id', action: 'get_funkis', on: :collection
-        delete 'destroy_by_ids/:fid/:tid', action: 'destroy_by_ids', on: :collection
-      end
+      resources :funkis_application
 
       resources :lineups do
         get 'artists_from_lineups', action: 'get_artists', on: :collection

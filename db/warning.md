@@ -1,1 +1,0 @@
-Tabellen Corteges innehåller ett array fält, detta fält stöds i vår nuvarande databas postgres. Men byter du databasen bör du kolla över om den stödjer arrays!

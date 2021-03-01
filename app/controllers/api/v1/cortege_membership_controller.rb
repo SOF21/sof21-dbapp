@@ -35,12 +35,7 @@ class API::V1::CortegeMembershipController < ApplicationController
   end
 
   def show
-    require_ownership_or_admin_permission cortege, AdminPermission::ALL
-
-    membership = CortegeMembership.find(params[:id])
-    user = User.find(membership.user_id)
-
-    render :json => user
+    raise 'not implemented'
   end
 
   def destroy

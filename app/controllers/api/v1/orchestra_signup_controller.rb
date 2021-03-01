@@ -41,7 +41,7 @@ class API::V1::OrchestraSignupController < ApplicationController
     end
     # Bad practice to remove directly from params, did not find any other way
     # OBS Important to not use .nil? since it returns an empty list (which is ever nil)
-    unless params[:item][:pickup_with]
+    unless current_user.orchestra_signup.empty?
       params[:item].delete :orchestra_ticket_attributes
       params[:item].delete :orchestra_food_ticket_attributes
       params[:item].delete :orchestra_articles_attributes
@@ -128,17 +128,17 @@ class API::V1::OrchestraSignupController < ApplicationController
 
       # First signup is used to minimize the number of questions
       # that need to be filled in on the front end if false.
-      has_ticket_pickup = current_user.orchestra_signup.where(pickup_with: true).empty?
+      first_signup = current_user.orchestra_signup.empty?
 
       # Used to reroute to an already submitted signup in frontend if true
       #double_signup = !orchestra.orchestra_signups.find_by(user_id: current_user.id).nil?
       double_signup = false
 
-      late_signup = has_ticket_pickup && Time.now >= LATE_REGISTRATION_START_DATE
+      late_signup = first_signup && Time.now >= LATE_REGISTRATION_START_DATE
 
       #Fix later: Filter out data from the return orchestra object
       #render :json => orchestra, only: [:name, :dormitory, :arrival_date]
-      render :json => {:orchestra => orchestra, :double_signup => double_signup ,:has_ticket_pickup => has_ticket_pickup, :late_signup => late_signup}
+      render :json => {:orchestra => orchestra, :double_signup => double_signup ,:first_signup => first_signup, :late_signup => late_signup}
     end
 
   end
@@ -157,7 +157,6 @@ class API::V1::OrchestraSignupController < ApplicationController
 
   def item_params
     params.require(:item).permit(
-        :pickup_with,
         :dormitory,
         :active_member,
         :consecutive_10,
