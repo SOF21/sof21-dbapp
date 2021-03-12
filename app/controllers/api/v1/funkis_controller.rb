@@ -6,10 +6,10 @@ class API::V1::FunkisController < ApplicationController
       if funkis.funkis_category_id
         category = FunkisCategory.find(funkis.funkis_category_id)
         result["category"] = category.title
-      end
-      if FunkisBooking.where(funkis_id: funkis.id).exists?(conditions = :none)
-        timeslots = FunkisBooking.where(funkis_id: funkis.id)
-        result["timeslots"] = timeslots
+        if FunkisBooking.where(funkis_id: funkis.id).exists?(conditions = :none)
+          timeslots = FunkisBooking.where(funkis_id: funkis.id)
+          result["timeslots"] = timeslots
+        end
       end
       @result << result
     end
@@ -42,7 +42,7 @@ class API::V1::FunkisController < ApplicationController
 
       if @funkis.save
         render :status => 200, :json => {
-          message: 'Successfully saved Funkis',
+          message: 'Successfully saved Funkis.',
         }
       else
         render :status => 500, :json => {
@@ -57,9 +57,7 @@ class API::V1::FunkisController < ApplicationController
 
     if @funkis.update(item_params_funkis)
       attempt_to_finalize_funkis(@funkis)
-      render :status => 200, :json => {
-        message: 'Successfully updated Funkis',
-      }
+      redirect_to api_v1_funkis_url(status: 303) and return
     else
       render :status => 500, :json => {
         message: @funkis.errors
@@ -131,7 +129,7 @@ class API::V1::FunkisController < ApplicationController
         :second_post_id,
         :third_post_id,
         :user_id,
-        :parnter_id
+        :workfriend_id
     )
   end
 end
