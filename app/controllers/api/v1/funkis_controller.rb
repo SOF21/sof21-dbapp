@@ -1,5 +1,11 @@
 class API::V1::FunkisController < ApplicationController
+  before_action :authenticate_user!
+
+  include ViewPermissionConcern
+
   def index
+    require_admin_permission AdminPermission::LIST_FUNKIS_APPLICATIONS
+
     @result = []
     Funkis.all.each do |funkis|
       result = funkis.as_json
@@ -18,6 +24,8 @@ class API::V1::FunkisController < ApplicationController
 
   def show
     @funkis = Funkis.find(params[:id])
+    require_ownership @funkis
+
     result = @funkis.as_json
     if @funkis.funkis_category_id
       category = FunkisCategory.find(@funkis.funkis_category_id)
@@ -55,6 +63,7 @@ class API::V1::FunkisController < ApplicationController
 
   def update
     @funkis = Funkis.find(params[:id])
+    require_ownership @funkis
 
     if @funkis.update(item_params_funkis)
       attempt_to_finalize_funkis(@funkis)
@@ -90,6 +99,15 @@ class API::V1::FunkisController < ApplicationController
         funkis.save!
         render :status => '200', :json => funkis.as_json
       end
+  end
+
+  def destroy
+    require_admin_permission AdminPermission::ALL
+
+    @funkis = Funkis.find(params[:id])
+    @funkis.destroy!
+
+    head :no_content
   end
 
   private
