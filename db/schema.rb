@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210208181839) do
+ActiveRecord::Schema.define(version: 20210215175555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,10 @@ ActiveRecord::Schema.define(version: 20210208181839) do
     t.string   "other_comments",               default: "",        null: false
     t.string   "contact_mail"
     t.string   "flags",                        default: "00000"
+    t.string   "invoice_address"
+    t.string   "secondary_name"
+    t.string   "secondary_mail"
+    t.string   "secondary_phone"
     t.index ["user_id"], name: "index_corteges_on_user_id", using: :btree
   end
 
