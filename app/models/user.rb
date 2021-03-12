@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   has_one :case_cortege
   has_one :cart
   has_one :cortege_membership
+  has_one :funkis
   has_one :funkis_application
 
   has_many :orders
