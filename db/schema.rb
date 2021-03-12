@@ -194,8 +194,8 @@ ActiveRecord::Schema.define(version: 20210215175555) do
     t.integer  "first_post_id"
     t.integer  "second_post_id"
     t.integer  "third_post_id"
-    t.string   "parnter_id"
     t.integer  "user_id"
+    t.string   "workfriend_id"
     t.index ["first_post_id"], name: "index_funkis_applications_on_first_post_id", using: :btree
     t.index ["funkis_id"], name: "index_funkis_applications_on_funkis_id", using: :btree
     t.index ["second_post_id"], name: "index_funkis_applications_on_second_post_id", using: :btree
