@@ -93,6 +93,10 @@ class API::V1::CortegeController < ApplicationController
         :theme_connection,
         :image_url,
         :gdpr,
+        :invoice_address,
+        :secondary_mail,
+        :secondary_name,
+        :secondary_phone
     )
   end
 
