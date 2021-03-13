@@ -207,28 +207,5 @@ if Rails.env.development?
       end_time: DateTime.new(2021, 5, 14, 16, 0)
   )
 
-  funkis = Funkis.create(
-      id: 1,
-      name: "Tester One",
-      liu_id: "teson100"
-  )
 
-  application_1 = FunkisApplication.create(
-      id: 1,
-      funkis_id: 1,
-      first_day: DateTime.new(2021, 5, 14, 0,0),
-      second_day: DateTime.new(2021, 5, 15, 0,0),
-      third_day: DateTime.new(2021, 5, 13, 0,0,),
-      first_post_id: 1,
-      second_post_id: 2,
-      third_post_id: 3
-  )
-
-  funkis.funkis_application_id = 1
-  funkis.save
-
-  booking1 = FunkisBooking.create(
-      funkis_id: 1,
-      funkis_timeslot_id: 1
-  )
 end
