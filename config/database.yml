@@ -1,3 +1,4 @@
+  
 # SQLite version 3.x
 #   gem install sqlite3
 #
@@ -9,8 +10,8 @@ development:
   adapter: postgresql
   encoding: unicode
   database: sof-db-app
-  user: test
-  password: test
+  user: postgres
+  password: admin
 
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
@@ -24,8 +25,8 @@ test:
   adapter: postgresql
   encoding: unicode
   database: sof-db-app
-  user: test
-  password: test
+  user: postgres
+  password: admin
 
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling

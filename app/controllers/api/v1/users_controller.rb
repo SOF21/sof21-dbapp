@@ -39,25 +39,7 @@ class API::V1::UsersController < ApplicationController
                    :orchestra
                  ]
                },
-               funkis_application: {
-                 include: [
-                   funkis_shift_applications: {
-                     include: [
-                       funkis_shift: {
-                         include: [
-                           :funkis_category
-                         ],
-                         except: [
-                           :maximum_workers
-                         ]
-                       }
-                     ]
-                   }
-                 ],
-                 methods: [
-                   :steps_completed
-                 ]
-               }
+               funkis_application: {}
              },
              methods: [
                  :is_lintek_member,
@@ -93,22 +75,7 @@ class API::V1::UsersController < ApplicationController
                :orchestra
              ]
            },
-           funkis_application: {
-             include: [
-               funkis_shift_applications: {
-                 include: [
-                   funkis_shift: {
-                     include: [
-                       :funkis_category
-                     ],
-                     except: [
-                       :maximum_workers
-                     ]
-                   }
-                 ]
-               }
-             ]
-           }
+           funkis_application: {}
          }
     else
       user = User.find_by email:(params[:email])
@@ -124,22 +91,7 @@ class API::V1::UsersController < ApplicationController
                   :orchestra
                 ]
               },
-              funkis_application: {
-                include: [
-                  funkis_shift_applications: {
-                    include: [
-                      funkis_shift: {
-                        include: [
-                          :funkis_category
-                        ],
-                        except: [
-                          :maximum_workers
-                        ]
-                      }
-                    ]
-                  }
-                ],
-              }
+              funkis_application: { }
             }
         elsif current_user.has_admin_permission? AdminPermission::ORCHESTRA_ADMIN
           render json: user, except: [
