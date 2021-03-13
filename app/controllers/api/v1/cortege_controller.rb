@@ -22,7 +22,7 @@ class API::V1::CortegeController < ApplicationController
     cortege.user = current_user
     cortege.save!
 
-    render :status => '200', :json => {:message => 'Cortege created.'}
+    redirect_to api_v1_cortege_url(cortege)
   end
 
   def show
