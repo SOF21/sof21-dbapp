@@ -15,7 +15,7 @@ class API::V1::CortegeController < ApplicationController
     disable_feature from: '2021-08-30'
 
     unless current_user.cortege.nil?
-      raise 'Cannot create another cortege application'
+      render :status => '403', :json => {:message => 'User has already created a cortege.'}
     end
 
     cortege = Cortege.new(item_params)
@@ -50,7 +50,7 @@ class API::V1::CortegeController < ApplicationController
 
     if cortege.update(params)
       render :status => 200, :json => {
-        message: 'Successfully saved Cortege.',
+        message: 'Successfully saved cortege.',
       }
     else
       raise 'Unable to save cortege'
