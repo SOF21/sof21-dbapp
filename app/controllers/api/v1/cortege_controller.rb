@@ -49,7 +49,9 @@ class API::V1::CortegeController < ApplicationController
     end
 
     if cortege.update(params)
-      redirect_to api_v1_cortege_url(cortege)
+      render :status => 200, :json => {
+        message: 'Successfully saved Cortege.',
+      }
     else
       raise 'Unable to save cortege'
     end
