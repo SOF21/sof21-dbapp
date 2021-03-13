@@ -2,35 +2,63 @@ class API::V1::FunkisController < ApplicationController
   def index
     @result = []
     Funkis.all.each do |funkis|
+      result = funkis.as_json
       if funkis.funkis_category_id
         category = FunkisCategory.find(funkis.funkis_category_id)
-        @result << funkis.attributes.merge({"funkis_category" => category.title})
-      else
-        @result << funkis
+        result["category"] = category.title
       end
-
+      if FunkisBooking.where(funkis_id: funkis.id).exists?(conditions = :none)
+        timeslots = FunkisBooking.where(funkis_id: funkis.id)
+        result["timeslots"] = timeslots
+      end
+      @result << result
     end
     render :json => @result
   end
 
   def show
     @funkis = Funkis.find(params[:id])
+    result = @funkis.as_json
     if @funkis.funkis_category_id
-      @category = FunkisCategory.find(@funkis.funkis_category_id)
-      render :json => @funkis.attributes.merge({"funkis_category" => @category.title})
-    else
-      render :json => @funkis
+      category = FunkisCategory.find(@funkis.funkis_category_id)
+      result = result.merge({"funkis_category" => category.title})
     end
+    if FunkisBooking.where(funkis_id: params[:id]).exists?(conditions = :none)
+      timeslots = FunkisBooking.where(funkis_id: params[:id])
+      result = result.merge({"timeslots" => timeslots})
+    end
+    render :json => result
   end
 
   def create
-    @funkis = Funkis.new(item_params_funkis)
-    @funkis.build_funkis_application(item_params_application)
-    @funkis.funkis_application_id = @funkis.funkis_application.id
+    if Funkis.where(liu_id: item_params_funkis[:liu_id]).exists?
+      render :status => 500, :json => {
+        message: "Funkis application already exists.",
+      }
+    else
+      @funkis = Funkis.new(item_params_funkis)
+      @funkis.build_funkis_application(item_params_application)
+      @funkis.funkis_application_id = @funkis.funkis_application.id
 
-    if @funkis.save
+      if @funkis.save
+        render :status => 200, :json => {
+          message: 'Successfully saved Funkis',
+        }
+      else
+        render :status => 500, :json => {
+          message: @funkis.errors
+        }
+      end
+    end
+  end
+
+  def update
+    @funkis = Funkis.find(params[:id])
+
+    if @funkis.update(item_params_funkis)
+      attempt_to_finalize_funkis(@funkis)
       render :status => 200, :json => {
-        message: 'Successfully saved Funkis.',
+        message: 'Successfully updated Funkis',
       }
     else
       render :status => 500, :json => {
@@ -39,17 +67,41 @@ class API::V1::FunkisController < ApplicationController
     end
   end
 
-  def update
-    @funkis = Funkis.find(params[:id])
+  def check_in_with_liu_card
+      funkis = Funkis.find_by liu_card:(params[:id])
+      if funkis.nil?
+        render :status => 404, :json => {
+          message: 'No funkis found with entered LiU card'
+        }
+      else
+        funkis.checked_in = !funkis.checked_in
+        funkis.save!
+        render :status => 200, :json => funkis.as_json
+      end
+  end
 
-    if @funkis.update(item_params_funkis)
-      redirect_to api_v1_funkis_url(@funkis)
-    else
-      raise 'Unable to save page'
-    end
+  def check_in_with_liuid
+    funkis = Funkis.find_by liu_id:(params[:id])
+      if funkis.nil?
+        render :status => 404, :json => {
+          message: 'No funkis found with that LiU id'
+        }
+      else
+        funkis.checked_in = !funkis.checked_in
+        funkis.save!
+        render :status => '200', :json => funkis.as_json
+      end
   end
 
   private
+
+  def attempt_to_finalize_funkis(funkis)
+    if funkis.marked_done? and not funkis.booking_sent?
+      FunkisMailer.funkis_booked(funkis).deliver_now
+      funkis.booking_sent = true
+      funkis.save
+    end
+  end
 
   def item_params_funkis
     params.require(:item).permit(
@@ -66,7 +118,8 @@ class API::V1::FunkisController < ApplicationController
         :funkis_application_id,
         :funkis_category_id,
         :association_name,
-        :liu_card
+        :liu_card,
+        :marked_done
     )
   end
   def item_params_application
@@ -76,7 +129,9 @@ class API::V1::FunkisController < ApplicationController
         :third_day,
         :first_post_id,
         :second_post_id,
-        :third_post_id
+        :third_post_id,
+        :user_id,
+        :parnter_id
     )
   end
 end

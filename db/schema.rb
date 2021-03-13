@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 20210215175555) do
     t.boolean  "electricity",                  default: false,     null: false
     t.string   "other_comments",               default: "",        null: false
     t.string   "contact_mail"
+    t.string   "flags",                        default: "00000"
     t.string   "invoice_address"
     t.string   "secondary_name"
     t.string   "secondary_mail"
@@ -176,6 +177,8 @@ ActiveRecord::Schema.define(version: 20210215175555) do
     t.integer  "funkis_application_id"
     t.integer  "funkis_category_id"
     t.boolean  "marked_done",           default: false
+    t.boolean  "booking_sent",          default: false
+    t.boolean  "checked_in",            default: false
     t.index ["funkis_application_id"], name: "index_funkis_on_funkis_application_id", using: :btree
     t.index ["funkis_category_id"], name: "index_funkis_on_funkis_category_id", using: :btree
   end
@@ -191,11 +194,13 @@ ActiveRecord::Schema.define(version: 20210215175555) do
     t.integer  "first_post_id"
     t.integer  "second_post_id"
     t.integer  "third_post_id"
+    t.string   "parnter_id"
     t.integer  "user_id"
     t.index ["first_post_id"], name: "index_funkis_applications_on_first_post_id", using: :btree
     t.index ["funkis_id"], name: "index_funkis_applications_on_funkis_id", using: :btree
     t.index ["second_post_id"], name: "index_funkis_applications_on_second_post_id", using: :btree
     t.index ["third_post_id"], name: "index_funkis_applications_on_third_post_id", using: :btree
+    t.index ["user_id"], name: "index_funkis_applications_on_user_id", using: :btree
   end
 
   create_table "funkis_bookings", force: :cascade do |t|

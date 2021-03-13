@@ -110,7 +110,8 @@ class API::V1::CortegeController < ApplicationController
         :security_feedback,
         :info_mail,
         :electricity,
-        :other_comments
+        :other_comments,
+        :flags
     )
   end
 end
