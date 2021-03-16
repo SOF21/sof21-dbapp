@@ -21,9 +21,7 @@ class API::V1::FunkisCategoryController < ApplicationController
     category = FunkisCategory.new(item_params)
 
     if category.save
-      render :status => 200, :json => {
-          message: 'Successfully saved FunkisCategory.',
-      }
+      render :status => 200, :json => category
     else
       render :status => 500, :json => {
           message: category.errors
@@ -35,7 +33,7 @@ class API::V1::FunkisCategoryController < ApplicationController
     category = FunkisCategory.find(params[:id])
 
     if category.update(item_params)
-      redirect_to api_v1_funkis_category_url(category)
+      render :status => 200
     else
       raise 'Unable to save page'
     end
