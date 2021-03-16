@@ -1,4 +1,6 @@
 class API::V1::FunkisCategoryController < ApplicationController
+  include ViewPermissionConcern
+
   def index
 
     @result = []
@@ -27,6 +29,20 @@ class API::V1::FunkisCategoryController < ApplicationController
           message: category.errors
       }
     end
+  end
+
+  def destroy
+    require_admin_permission AdminPermission::ALL
+    funkis_category = FunkisCategory.find(params[:id])
+
+    funkis_timeslots = FunkisTimeslot.where(funkis_category_id: params[:id])
+    for timeslot in funkis_timeslots
+      timeslot.delete
+    end
+
+    funkis_category.delete
+
+    head :no_content
   end
 
   def update
