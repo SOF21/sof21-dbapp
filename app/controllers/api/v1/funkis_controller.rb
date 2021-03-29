@@ -112,16 +112,6 @@ class API::V1::FunkisController < ApplicationController
     head :no_content
   end
 
-  def destroy
-    require_admin_permission AdminPermission::ALL
-
-    @funkis = Funkis.find(params[:id])
-    FunkisMailer.funkis_deleted(@funkis).deliver_now
-    @funkis.destroy!
-
-    head :no_content
-  end
-
   private
 
   def attempt_to_finalize_funkis(funkis)
