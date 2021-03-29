@@ -9,6 +9,7 @@ class API::V1::FunkisTimeslotsController < ApplicationController
   end
 
   def create
+    require_admin_permission AdminPermission::ALL
     timeslot = FunkisTimeslot.new(item_params)
 
     if timeslot.save
@@ -21,6 +22,7 @@ class API::V1::FunkisTimeslotsController < ApplicationController
   end
 
   def update
+    require_admin_permission AdminPermission::ALL
     timeslot = FunkisTimeslot.find(params[:id])
 
     if timeslot.update(item_params)
@@ -31,6 +33,7 @@ class API::V1::FunkisTimeslotsController < ApplicationController
   end
 
   def destroy
+    require_admin_permission AdminPermission::ALL
     timeslot = FunkisTimeslot.find(params[:id])
     timeslot.destroy!
     head :no_content
