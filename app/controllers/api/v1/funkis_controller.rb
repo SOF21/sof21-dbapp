@@ -1,15 +1,21 @@
 class API::V1::FunkisController < ApplicationController
+  before_action :authenticate_user!
+
+  include ViewPermissionConcern
+
   def index
+    require_admin_permission AdminPermission::LIST_FUNKIS_APPLICATIONS
+
     @result = []
     Funkis.all.each do |funkis|
       result = funkis.as_json
       if funkis.funkis_category_id
         category = FunkisCategory.find(funkis.funkis_category_id)
         result["category"] = category.title
-      end
-      if FunkisBooking.where(funkis_id: funkis.id).exists?(conditions = :none)
-        timeslots = FunkisBooking.where(funkis_id: funkis.id)
-        result["timeslots"] = timeslots
+        if FunkisBooking.where(funkis_id: funkis.id).exists?(conditions = :none)
+          timeslots = FunkisBooking.where(funkis_id: funkis.id)
+          result["timeslots"] = timeslots
+        end
       end
       @result << result
     end
@@ -18,6 +24,8 @@ class API::V1::FunkisController < ApplicationController
 
   def show
     @funkis = Funkis.find(params[:id])
+    require_ownership_or_admin_permission @funkis, AdminPermission::LIST_FUNKIS_APPLICATIONS
+
     result = @funkis.as_json
     if @funkis.funkis_category_id
       category = FunkisCategory.find(@funkis.funkis_category_id)
@@ -39,10 +47,12 @@ class API::V1::FunkisController < ApplicationController
       @funkis = Funkis.new(item_params_funkis)
       @funkis.build_funkis_application(item_params_application)
       @funkis.funkis_application_id = @funkis.funkis_application.id
+      @funkis.user = current_user
 
       if @funkis.save
+        FunkisMailer.funkis_confirmation(@funkis).deliver_now
         render :status => 200, :json => {
-          message: 'Successfully saved Funkis',
+          message: 'Successfully saved Funkis.',
         }
       else
         render :status => 500, :json => {
@@ -54,12 +64,11 @@ class API::V1::FunkisController < ApplicationController
 
   def update
     @funkis = Funkis.find(params[:id])
+    require_ownership_or_admin_permission @funkis, AdminPermission::LIST_FUNKIS_APPLICATIONS
 
     if @funkis.update(item_params_funkis)
       attempt_to_finalize_funkis(@funkis)
-      render :status => 200, :json => {
-        message: 'Successfully updated Funkis',
-      }
+      redirect_to api_v1_funkis_url(status: 303) and return
     else
       render :status => 500, :json => {
         message: @funkis.errors
@@ -93,12 +102,26 @@ class API::V1::FunkisController < ApplicationController
       end
   end
 
+  def destroy
+    require_admin_permission AdminPermission::ALL
+
+    @funkis = Funkis.find(params[:id])
+    FunkisMailer.funkis_deleted(@funkis).deliver_now
+    @funkis.destroy!
+
+    head :no_content
+  end
+
   private
 
   def attempt_to_finalize_funkis(funkis)
     if funkis.marked_done? and not funkis.booking_sent?
       FunkisMailer.funkis_booked(funkis).deliver_now
       funkis.booking_sent = true
+      funkis.save
+    elsif not funkis.marked_done? and funkis.booking_sent?
+      FunkisMailer.funkis_unbooked(funkis).deliver_now
+      funkis.booking_sent = false
       funkis.save
     end
   end
@@ -131,7 +154,7 @@ class API::V1::FunkisController < ApplicationController
         :second_post_id,
         :third_post_id,
         :user_id,
-        :parnter_id
+        :workfriend_id
     )
   end
 end
