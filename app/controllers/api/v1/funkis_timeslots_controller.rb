@@ -12,9 +12,7 @@ class API::V1::FunkisTimeslotsController < ApplicationController
     timeslot = FunkisTimeslot.new(item_params)
 
     if timeslot.save
-      render :status => 200, :json => {
-          message: 'Successfully saved FunkisTimeslot.',
-      }
+      render :status => 200, :json => timeslot, :except => [:updated_at, :created_at]
     else
       render :status => 500, :json => {
           message: timeslot.errors
