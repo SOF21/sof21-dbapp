@@ -21,8 +21,6 @@ class API::V1::FunkisTimeslotsController < ApplicationController
   end
 
   def update
-
-
     timeslot = FunkisTimeslot.find(params[:id])
 
     if timeslot.update(item_params)
@@ -30,6 +28,12 @@ class API::V1::FunkisTimeslotsController < ApplicationController
     else
       raise 'Unable to save page'
     end
+  end
+
+  def destroy
+    timeslot = FunkisTimeslot.find(params[:id])
+    timeslot.destroy!
+    head :no_content
   end
 
   def item_params
