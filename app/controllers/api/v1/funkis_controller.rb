@@ -50,7 +50,7 @@ class API::V1::FunkisController < ApplicationController
       @funkis.user = current_user
 
       if @funkis.save
-        FunkisMailer.funkis_confirmation(funkis).deliver_now
+        FunkisMailer.funkis_confirmation(@funkis).deliver_now
         render :status => 200, :json => {
           message: 'Successfully saved Funkis.',
         }
