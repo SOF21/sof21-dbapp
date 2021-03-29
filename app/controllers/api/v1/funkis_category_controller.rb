@@ -32,7 +32,7 @@ class API::V1::FunkisCategoryController < ApplicationController
   end
 
   def destroy
-    #require_admin_permission AdminPermission::ALL
+    require_admin_permission AdminPermission::LIST_FUNKIS_APPLICATIONS
     funkis_category = FunkisCategory.find(params[:id])
 
     funkis_timeslots = FunkisTimeslot.where(funkis_category_id: params[:id])
