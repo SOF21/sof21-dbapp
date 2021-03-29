@@ -32,12 +32,25 @@ class API::V1::FunkisCategoryController < ApplicationController
   end
 
   def destroy
-    require_admin_permission AdminPermission::ALL
+    #require_admin_permission AdminPermission::ALL
     funkis_category = FunkisCategory.find(params[:id])
 
     funkis_timeslots = FunkisTimeslot.where(funkis_category_id: params[:id])
     for timeslot in funkis_timeslots
       timeslot.delete
+    end
+
+    # Set any application using this Category to nil
+    for fa in FunkisApplication.where(first_post_id: params[:id]).or(FunkisApplication.where(second_post_id: params[:id]).or(FunkisApplication.where(third_post_id: params[:id])))
+      if fa.first_post_id == funkis_category.id
+        fa.first_post_id = nil
+      end
+      if fa.second_post_id == funkis_category.id
+        fa.second_post_id = nil
+      end
+      if fa.third_post_id == funkis_category.id
+        fa.third_post_id = nil
+      end
     end
 
     funkis_category.delete
