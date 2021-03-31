@@ -68,7 +68,7 @@ class API::V1::FunkisController < ApplicationController
 
     if @funkis.update(item_params_funkis)
       attempt_to_finalize_funkis(@funkis)
-      redirect_to api_v1_funkis_url(status: 303) and return
+      render :status => 200 and return
     else
       render :status => 500, :json => {
         message: @funkis.errors

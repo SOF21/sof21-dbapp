@@ -19,7 +19,7 @@ class FunkisMailer < ApplicationMailer
 
   def funkis_unbooked(funkis)
     @funkis = funkis
-
+    @category = FunkisCategory.find(funkis.funkis_category_id)
     mail(to: @funkis.mail, subject: 'SOF21: Avbokad för funkis-pass')
   end
 

@@ -26,10 +26,7 @@ Vid frågor kan du mejla personal@sof.se!
 
 Hi <%= @funkis.name %>!
 
-You have now been booked as <%= @category.title %> for the following dates:
-<% @timeslots.each do |slot| %>
-  <%=l(slot.start_time) %> till <%=l(slot.end_time) %>
-<% end %>
+You have now been unbooked as <%= @category.title %> for the following dates.
 
 We are so grateful that you want to be a volunteer at SOF! Volunteering at SOF is a great way to meet a lot of different people and get a chance to help realize Sweden’s biggest student festival! It will be a couple of intense but amazing days, so it is important that you have read the contract thoroughly.
 

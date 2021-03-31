@@ -37,6 +37,9 @@ class API::V1::FunkisCategoryController < ApplicationController
 
     funkis_timeslots = FunkisTimeslot.where(funkis_category_id: params[:id])
     for timeslot in funkis_timeslots
+      for booking in FunkisBooking.where(funkis_timeslot_id: timeslot.id)
+        booking.delete
+      end
       timeslot.delete
     end
 
@@ -51,6 +54,12 @@ class API::V1::FunkisCategoryController < ApplicationController
       if fa.third_post_id == funkis_category.id
         fa.third_post_id = nil
       end
+      fa.save
+    end
+
+    for funkis in Funkis.where(funkis_category_id: params[:id])
+      funkis.funkis_category_id = nil
+      funkis.save
     end
 
     funkis_category.delete

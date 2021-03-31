@@ -38,6 +38,11 @@ class API::V1::FunkisTimeslotsController < ApplicationController
   def destroy
     require_admin_permission AdminPermission::LIST_FUNKIS_APPLICATIONS
     timeslot = FunkisTimeslot.find(params[:id])
+
+    for booking in FunkisBooking.where(funkis_timeslot_id: params[:id])
+      booking.delete
+    end
+
     timeslot.destroy
     head :no_content
   end
