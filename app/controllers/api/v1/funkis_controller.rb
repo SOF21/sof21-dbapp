@@ -50,7 +50,7 @@ class API::V1::FunkisController < ApplicationController
       @funkis.user = current_user
 
       if @funkis.save
-        FunkisMailer.funkis_confirmation(funkis).deliver_now
+        FunkisMailer.funkis_confirmation(@funkis).deliver_now
         render :status => 200, :json => {
           message: 'Successfully saved Funkis.',
         }
@@ -100,16 +100,6 @@ class API::V1::FunkisController < ApplicationController
         funkis.save!
         render :status => '200', :json => funkis.as_json
       end
-  end
-
-  def destroy
-    require_admin_permission AdminPermission::ALL
-
-    @funkis = Funkis.find(params[:id])
-    FunkisMailer.funkis_deleted(@funkis).deliver_now
-    @funkis.destroy!
-
-    head :no_content
   end
 
   def destroy
