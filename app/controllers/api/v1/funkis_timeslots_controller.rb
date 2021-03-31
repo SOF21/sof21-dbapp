@@ -29,7 +29,7 @@ class API::V1::FunkisTimeslotsController < ApplicationController
     timeslot = FunkisTimeslot.find(params[:id])
 
     if timeslot.update(item_params)
-      redirect_to api_v1_funkis_timeslots_url(timeslot)
+      render :status => 200, :json => timeslot, :except => [:updated_at, :created_at]
     else
       raise 'Unable to save page'
     end
@@ -38,7 +38,7 @@ class API::V1::FunkisTimeslotsController < ApplicationController
   def destroy
     require_admin_permission AdminPermission::LIST_FUNKIS_APPLICATIONS
     timeslot = FunkisTimeslot.find(params[:id])
-    timeslot.destroy!
+    timeslot.destroy
     head :no_content
   end
 
