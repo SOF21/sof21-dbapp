@@ -17,7 +17,8 @@ class API::V1::ArticleController < ApplicationController
     article = AvailableArticle.new(item_params)
     article.save!
 
-    redirect_to api_v1_article_url(article)
+    #redirect_to api_v1_article_url(article)
+    render :status => 200, :json => article, except: [ updated_at, created_at ]
   end
 
   def show
@@ -32,6 +33,7 @@ class API::V1::ArticleController < ApplicationController
     article = AvailableArticle.find(params[:id])
     if article.update(item_params)
       redirect_to api_v1_article_url(article)
+      render :status => 200, :json => article, except: [ updated_at, created_at ]
     else
       raise 'Unable to save article'
     end
