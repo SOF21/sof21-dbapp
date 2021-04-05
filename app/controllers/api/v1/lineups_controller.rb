@@ -9,6 +9,7 @@ class API::V1::LineupsController < ApplicationController
     require_admin_permission AdminPermission::LIST_CORTEGE_APPLICATIONS
     lineup = Lineup.new(item_params)
     lineup.save!
+    render :status => 201, :json => lineup
   end
 
   def show
@@ -21,7 +22,7 @@ class API::V1::LineupsController < ApplicationController
     require_admin_permission AdminPermission::LIST_CORTEGE_APPLICATIONS
     lineup = Lineup.find(params[:id])
     if lineup.update(item_params)
-      redirect_to api_v1_lineups_url(lineup)
+      render :status => 200, :json => lineup
     else
       raise 'Unable to update lineup'
     end

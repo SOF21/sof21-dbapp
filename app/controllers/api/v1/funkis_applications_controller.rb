@@ -4,38 +4,36 @@ class API::V1::FunkisApplicationsController < ApplicationController
   end
 
   def show
-    @fapplication = FunkisApplication.find(params[:id])
+    fapplication = FunkisApplication.find(params[:id])
     categories = {}
-    if @fapplication.first_post_id
-      categories["first_post"] = @fapplication.first_post.title
+    if fapplication.first_post_id
+      categories["first_post"] = fapplication.first_post.title
     end
-    if @fapplication.second_post_id
-      categories["second_post"] = @fapplication.second_post.title
+    if fapplication.second_post_id
+      categories["second_post"] = fapplication.second_post.title
     end
-    if @fapplication.third_post_id
-      categories["third_post"] = @fapplication.third_post.title
+    if fapplication.third_post_id
+      categories["third_post"] = fapplication.third_post.title
     end
-    render :json => @fapplication.attributes.merge(categories), :except => [:updated_at, :created_at]
+    render :json => fapplication.attributes.merge(categories), :except => [:updated_at, :created_at]
   end
 
   def create
-    @fapplication = FunkisApplication.new(item_params)
-    if @fapplication.save
-      render :status => 200, :json => {
-        message: 'Successfully saved FunkisApplication.',
-      }
+    fapplication = FunkisApplication.new(item_params)
+    if fapplication.save
+      render :status => 201, :json => fapplication
     else
       render :status => 500, :json => {
-        message: @fapplication.errors
+        message: fapplication.errors
       }
     end
   end
 
   def update
-    @fapplication = FunkisApplication.find(params[:id])
+    fapplication = FunkisApplication.find(params[:id])
 
-    if @fapplication.update(item_params)
-      redirect_to api_v1_funkis_url(@fapplication)
+    if fapplication.update(item_params)
+      render :status => 200, :json => fapplication
     else
       raise 'Unable to save page'
     end

@@ -11,7 +11,7 @@ class API::V1::PagesController < ApplicationController
     page = Page.new(item_params)
     page.save
 
-    redirect_to api_v1_page_url(page)
+    render :status => 201, :json => page
   end
 
   def show
@@ -31,7 +31,7 @@ class API::V1::PagesController < ApplicationController
     page = Page.find(params[:id])
 
     if page.update(item_params)
-      redirect_to api_v1_page_url(page)
+      render :status => 200, :json => page
     else
       raise 'Unable to save page'
     end
