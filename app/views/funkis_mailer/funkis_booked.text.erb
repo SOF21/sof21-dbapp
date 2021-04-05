@@ -4,7 +4,7 @@ Hej <%= @funkis.name %>!
 
 Du har nu blivit bokad som <%= @category.title %> för följande pass:
 <% @timeslots.each do |slot| %>
-  <%=l(slot.start_time) %> till <%=l(slot.end_time) %>
+  <%= slot.start_time.in_time_zone('Stockholm').strftime('%Y-%m-%d %H:%M:%S') %> till <%= slot.end_time.in_time_zone('Stockholm').strftime('%Y-%m-%d %H:%M:%S') %>
 <% end %>
 
 Övrigt fluff här nere.
