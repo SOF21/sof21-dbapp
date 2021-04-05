@@ -174,7 +174,7 @@ class API::V1::UsersController < ApplicationController
       # Only allows a admin to update a users display_name and permissions
       if user.update(user_admin_params)
         #redirect_to api_v1_user_url(user)
-        render :json => user, except: [
+        render :status => 200, :json => user, except: [
           :created_at,
           :updated_at
         ]
