@@ -11,7 +11,8 @@ development:
   encoding: unicode
   database: sof-db-app
   user: postgres
-  password: admin
+  password: postgres
+  host: db
 
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
@@ -26,7 +27,8 @@ test:
   encoding: unicode
   database: sof-db-app
   user: postgres
-  password: admin
+  password: postgres
+  host: db
 
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
