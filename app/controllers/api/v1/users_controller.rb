@@ -177,6 +177,7 @@ class API::V1::UsersController < ApplicationController
         render :json => users, except: [
           :created_at,
           :updated_at
+        ]
       else
         raise 'Unable to save user'
       end
