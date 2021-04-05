@@ -6,36 +6,36 @@ class API::V1::FunkisController < ApplicationController
   def index
     require_admin_permission AdminPermission::LIST_FUNKIS_APPLICATIONS
 
-    @result = []
+    result = []
     Funkis.all.each do |funkis|
-      result = funkis.as_json
+      funkis_as_json = funkis.as_json
       if funkis.funkis_category_id
         category = FunkisCategory.find(funkis.funkis_category_id)
-        result["category"] = category.title
+        funkis_as_json["category"] = category.title
         if FunkisBooking.where(funkis_id: funkis.id).exists?(conditions = :none)
           timeslots = FunkisBooking.where(funkis_id: funkis.id)
-          result["timeslots"] = timeslots
+          funkis_as_json["timeslots"] = timeslots
         end
       end
-      @result << result
+      result << funkis_as_json
     end
-    render :json => @result
+    render :json => result
   end
 
   def show
-    @funkis = Funkis.find(params[:id])
-    require_ownership_or_admin_permission @funkis, AdminPermission::LIST_FUNKIS_APPLICATIONS
+    funkis = Funkis.find(params[:id])
+    require_ownership_or_admin_permission funkis, AdminPermission::LIST_FUNKIS_APPLICATIONS
 
-    result = @funkis.as_json
-    if @funkis.funkis_category_id
-      category = FunkisCategory.find(@funkis.funkis_category_id)
-      result = result.merge({"funkis_category" => category.title})
+    funkis_as_json = funkis.as_json
+    if funkis.funkis_category_id
+      category = FunkisCategory.find(funkis.funkis_category_id)
+      funkis_as_json = funkis_as_json.merge({"funkis_category" => category.title})
     end
     if FunkisBooking.where(funkis_id: params[:id]).exists?(conditions = :none)
       timeslots = FunkisBooking.where(funkis_id: params[:id])
-      result = result.merge({"timeslots" => timeslots})
+      funkis_as_json = funkis_as_json.merge({"timeslots" => timeslots})
     end
-    render :json => result
+    render :json => funkis_as_json
   end
 
   def create
@@ -44,34 +44,32 @@ class API::V1::FunkisController < ApplicationController
         message: "Funkis application already exists.",
       }
     else
-      @funkis = Funkis.new(item_params_funkis)
-      @funkis.build_funkis_application(item_params_application)
-      @funkis.funkis_application_id = @funkis.funkis_application.id
-      @funkis.user = current_user
+      funkis = Funkis.new(item_params_funkis)
+      funkis.build_funkis_application(item_params_application)
+      funkis.funkis_application_id = funkis.funkis_application.id
+      funkis.user = current_user
 
-      if @funkis.save
-        FunkisMailer.funkis_confirmation(@funkis).deliver_now
-        render :status => 200, :json => {
-          message: 'Successfully saved Funkis.',
-        }
+      if funkis.save
+        FunkisMailer.funkis_confirmation(funkis).deliver_now
+        render :status => 201, :json => funkis
       else
         render :status => 500, :json => {
-          message: @funkis.errors
+          message: funkis.errors
         }
       end
     end
   end
 
   def update
-    @funkis = Funkis.find(params[:id])
-    require_ownership_or_admin_permission @funkis, AdminPermission::LIST_FUNKIS_APPLICATIONS
+    funkis = Funkis.find(params[:id])
+    require_ownership_or_admin_permission funkis, AdminPermission::LIST_FUNKIS_APPLICATIONS
 
-    if @funkis.update(item_params_funkis)
-      attempt_to_finalize_funkis(@funkis)
-      render :status => 200 and return
+    if funkis.update(item_params_funkis)
+      attempt_to_finalize_funkis(funkis)
+      render :status => 200, :json => funkis
     else
       render :status => 500, :json => {
-        message: @funkis.errors
+        message: funkis.errors
       }
     end
   end
@@ -105,9 +103,9 @@ class API::V1::FunkisController < ApplicationController
   def destroy
     require_admin_permission AdminPermission::ALL
 
-    @funkis = Funkis.find(params[:id])
-    FunkisMailer.funkis_deleted(@funkis).deliver_now
-    @funkis.destroy!
+    funkis = Funkis.find(params[:id])
+    FunkisMailer.funkis_deleted(funkis).deliver_now
+    funkis.destroy!
 
     head :no_content
   end

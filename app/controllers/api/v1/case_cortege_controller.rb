@@ -19,7 +19,7 @@ class API::V1::CaseCortegeController < ApplicationController
     cortege.user = current_user
     cortege.save!
 
-    redirect_to api_v1_case_cortege_url(cortege)
+    render :status => 201, :json => cortege, include: [:user]
   end
 
   def show
@@ -46,7 +46,7 @@ class API::V1::CaseCortegeController < ApplicationController
     end
 
     if cortege.update(params)
-      redirect_to api_v1_case_cortege_url(cortege)
+      render :status => 200, :json => cortege, include: [:user]
     else
       raise 'Unable to save cortege'
     end
@@ -81,4 +81,5 @@ class API::V1::CaseCortegeController < ApplicationController
         :status
     )
   end
+
 end

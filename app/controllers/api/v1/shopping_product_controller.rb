@@ -35,7 +35,7 @@ class API::V1::ShoppingProductController < ApplicationController
     product = BaseProduct.new(item_params)
     product.save!
 
-    redirect_to api_v1_shopping_product_url(product)
+    render :status => 201, :json => product, include: [:products]
   end
 
   def show
@@ -47,7 +47,7 @@ class API::V1::ShoppingProductController < ApplicationController
 
     product = BaseProduct.find(params[:id])
     if product.update(item_params)
-      redirect_to api_v1_shopping_product_url(product)
+      render :status => 200, :json => product, include: [:products]
     else
       raise 'Unable to update product'
     end

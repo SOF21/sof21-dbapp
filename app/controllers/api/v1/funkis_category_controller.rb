@@ -71,7 +71,7 @@ class API::V1::FunkisCategoryController < ApplicationController
     category = FunkisCategory.find(params[:id])
 
     if category.update(item_params)
-      render :status => 200
+      render :status => 200, :json => category
     else
       raise 'Unable to save page'
     end

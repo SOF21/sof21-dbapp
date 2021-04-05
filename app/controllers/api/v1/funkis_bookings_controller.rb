@@ -22,9 +22,7 @@ class API::V1::FunkisBookingsController < ApplicationController
     booking = FunkisBooking.new(item_params)
 
     if booking.save
-      render :status => 200, :json => {
-          message: 'Successfully saved Booking.',
-      }
+      render :status => 201, :json => booking
     else
       render :status => 500, :json => {
           message: booking.errors

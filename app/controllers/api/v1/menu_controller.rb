@@ -14,7 +14,7 @@ class API::V1::MenuController < ApplicationController
     menu_item = MenuItem.new(item_params)
     menu_item.save
 
-    redirect_to api_v1_menu_url(menu_item)
+    render :status => 201, :json => menu_item
   end
 
   def show
@@ -27,7 +27,7 @@ class API::V1::MenuController < ApplicationController
     menu_item = MenuItem.find(params[:id])
 
     if menu_item.update(item_params)
-      redirect_to api_v1_menu_url(menu_item)
+      render :status => 200, :json => menu_item
     else
       raise 'Unable to save menu item'
     end
