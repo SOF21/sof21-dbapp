@@ -93,6 +93,7 @@ class API::V1::CortegeController < ApplicationController
         :contact_mail,
         :idea,
         :theme_connection,
+        :material,
         :image_url,
         :gdpr,
         :invoice_address,

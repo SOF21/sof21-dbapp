@@ -9,7 +9,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: sof-db-app
+  database: sof_db_app_dev
   user: postgres
   password: postgres
   host: db
@@ -25,7 +25,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: sof-db-app
+  database: sof_db_app_test
   user: postgres
   password: postgres
   host: db
