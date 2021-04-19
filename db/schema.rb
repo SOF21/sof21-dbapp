@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210215175555) do
+ActiveRecord::Schema.define(version: 20210419180726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -179,8 +179,10 @@ ActiveRecord::Schema.define(version: 20210215175555) do
     t.boolean  "marked_done",           default: false
     t.boolean  "booking_sent",          default: false
     t.boolean  "checked_in",            default: false
+    t.integer  "user_id"
     t.index ["funkis_application_id"], name: "index_funkis_on_funkis_application_id", using: :btree
     t.index ["funkis_category_id"], name: "index_funkis_on_funkis_category_id", using: :btree
+    t.index ["user_id"], name: "index_funkis_on_user_id", using: :btree
   end
 
   create_table "funkis_applications", force: :cascade do |t|
@@ -196,6 +198,7 @@ ActiveRecord::Schema.define(version: 20210215175555) do
     t.integer  "third_post_id"
     t.string   "parnter_id"
     t.integer  "user_id"
+    t.string   "workfriend_id"
     t.index ["first_post_id"], name: "index_funkis_applications_on_first_post_id", using: :btree
     t.index ["funkis_id"], name: "index_funkis_applications_on_funkis_id", using: :btree
     t.index ["second_post_id"], name: "index_funkis_applications_on_second_post_id", using: :btree
@@ -213,9 +216,10 @@ ActiveRecord::Schema.define(version: 20210215175555) do
   create_table "funkis_categories", force: :cascade do |t|
     t.string   "title"
     t.string   "desc"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "funkis_timeslots_id"
+    t.integer  "amount_needed",       default: 0
     t.index ["funkis_timeslots_id"], name: "index_funkis_categories_on_funkis_timeslots_id", using: :btree
   end
 
@@ -309,7 +313,7 @@ ActiveRecord::Schema.define(version: 20210215175555) do
     t.datetime "updated_at",                     null: false
     t.integer  "user_id"
     t.boolean  "dormitory",      default: false, null: false
-    t.integer  "orchestra_type", default: 0,     null: false
+    t.integer  "orchestra_type",                 null: false
     t.string   "email"
     t.integer  "arrival_date"
     t.index ["user_id"], name: "index_orchestras_on_user_id", using: :btree
@@ -416,6 +420,9 @@ ActiveRecord::Schema.define(version: 20210215175555) do
     t.boolean  "allow_password_change",  default: false,                       null: false
     t.uuid     "uuid",                   default: -> { "uuid_generate_v4()" }, null: false
     t.string   "liu_card_number"
+    t.string   "invoice_address"
+    t.string   "phone"
+    t.string   "allergies"
     t.index ["email"], name: "index_users_on_email", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
@@ -424,4 +431,5 @@ ActiveRecord::Schema.define(version: 20210215175555) do
   add_foreign_key "discount_codes", "products"
   add_foreign_key "funkis", "funkis_applications"
   add_foreign_key "funkis", "funkis_categories"
+  add_foreign_key "funkis", "users"
 end
