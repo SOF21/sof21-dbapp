@@ -120,6 +120,7 @@ class API::V1::OrchestraController < ApplicationController
         :email,
         :orchestra_type,
         :allow_signup,
+        :invoice_address,
         :dormitory,
         :arrival_date
     )
