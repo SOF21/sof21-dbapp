@@ -2,10 +2,7 @@ This information will follow in English below.
 --
 Hej <%= @funkis.name %>!
 
-Du har nu blivit bokad som <%= @category.title %> för följande pass:
-<% @timeslots.each do |slot| %>
-  <%= slot.start_time.in_time_zone('Stockholm').strftime('%Y-%m-%d %H:%M:%S') %> till <%= slot.end_time.in_time_zone('Stockholm').strftime('%Y-%m-%d %H:%M:%S') %>
-<% end %>
+Du har nu blivit avbokad som <%= @category.title %>.
 
 Övrigt fluff här nere.
 Vad kul att du vill vara funkis på SOF! SOF är ett utmärkt sätt att träffa på en massa olika människor och att få engagera sig i Sveriges största studentarrangerade studentfestival! Vilken grej! Det kommer att bli några otroligt intensiva men helt fantastiska dagar så det är viktigt att du har läst igenom kontraktet noga.
@@ -29,10 +26,7 @@ Vid frågor kan du mejla personal@sof.se!
 
 Hi <%= @funkis.name %>!
 
-You have now been booked as <%= @category.title %> for the following dates:
-<% @timeslots.each do |slot| %>
-  <%=l(slot.start_time) %> till <%=l(slot.end_time) %>
-<% end %>
+You have now been unbooked as <%= @category.title %> for the following dates.
 
 We are so grateful that you want to be a volunteer at SOF! Volunteering at SOF is a great way to meet a lot of different people and get a chance to help realize Sweden’s biggest student festival! It will be a couple of intense but amazing days, so it is important that you have read the contract thoroughly.
 

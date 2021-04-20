@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 20210419180726) do
     t.string   "secondary_name"
     t.string   "secondary_mail"
     t.string   "secondary_phone"
+    t.boolean  "material"
     t.index ["user_id"], name: "index_corteges_on_user_id", using: :btree
   end
 
@@ -196,7 +197,6 @@ ActiveRecord::Schema.define(version: 20210419180726) do
     t.integer  "first_post_id"
     t.integer  "second_post_id"
     t.integer  "third_post_id"
-    t.string   "parnter_id"
     t.integer  "user_id"
     t.string   "workfriend_id"
     t.index ["first_post_id"], name: "index_funkis_applications_on_first_post_id", using: :btree
@@ -306,16 +306,17 @@ ActiveRecord::Schema.define(version: 20210419180726) do
   end
 
   create_table "orchestras", force: :cascade do |t|
-    t.string   "name",                           null: false
-    t.string   "code",                           null: false
-    t.boolean  "allow_signup",   default: true
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.string   "name",                            null: false
+    t.string   "code",                            null: false
+    t.boolean  "allow_signup",    default: true
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "user_id"
-    t.boolean  "dormitory",      default: false, null: false
-    t.integer  "orchestra_type",                 null: false
+    t.boolean  "dormitory",       default: false, null: false
+    t.integer  "orchestra_type",                  null: false
     t.string   "email"
     t.integer  "arrival_date"
+    t.string   "invoice_address"
     t.index ["user_id"], name: "index_orchestras_on_user_id", using: :btree
   end
 

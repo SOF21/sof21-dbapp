@@ -18,7 +18,8 @@ class API::V1::UsersController < ApplicationController
   end
 
   def index
-    raise 'Listing all users not supported'
+    render :json => User.all
+    #raise 'Listing all users not supported'
   end
 
   # Gets user or current_user if no params sent by user id
