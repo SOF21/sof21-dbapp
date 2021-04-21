@@ -90,6 +90,8 @@ Rails.application.routes.draw do
       end
 
       scope '/collect' do
+        get '/get_user/:email', to: 'item_collect#user_mail', param: :email, constraints: { email: /.*/ }
+        get '/get_orders', to: 'item_collect#display_orders'
         get '/:uuid', to: 'item_collect#show'
         get '/liu_card/:liu_card_number', to: 'item_collect#liu_card'
         post '/', to: 'item_collect#collect'
