@@ -18,7 +18,8 @@ class API::V1::UsersController < ApplicationController
   end
 
   def index
-    raise 'Listing all users not supported'
+    render :json => User.all
+    #raise 'Listing all users not supported'
   end
 
   # Gets user or current_user if no params sent by user id
@@ -171,17 +172,23 @@ class API::V1::UsersController < ApplicationController
   def update
     user = User.find(params[:id])
     if current_user.has_admin_permission? AdminPermission::MODIFY_USERS
-      # Only allows a admin to update a users display_name and permissions
+      # Only allows a admin to update a users display_name and permissions and info for covid
       if user.update(user_admin_params)
-        redirect_to api_v1_user_url(user)
+        render :json => user, except: [
+          :created_at,
+          :updated_at
+        ]
       else
         raise 'Unable to save user'
       end
     else
       require_ownership user
-      # Only allows user to update his display_name
+      # Only allows user to update his display_name, and info for covid
       if user.update(user_params)
-        redirect_to '/api/v1/user'
+        render :json => user, except: [
+          :created_at,
+          :updated_at
+        ]
       else
         raise 'Unable to save profile'
       end
@@ -233,7 +240,10 @@ class API::V1::UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
         :display_name,
-        :nickname
+        :nickname,
+        :invoice_address,
+        :phone,
+        :allergies
     )
   end
 
@@ -244,7 +254,10 @@ class API::V1::UsersController < ApplicationController
         :display_name,
         :admin_permissions,
         :usergroup,
-        :rebate_balance
+        :rebate_balance,
+        :invoice_address,
+        :phone,
+        :allergies
     )
   end
 
