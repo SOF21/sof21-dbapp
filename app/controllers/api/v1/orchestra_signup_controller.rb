@@ -59,7 +59,7 @@ class API::V1::OrchestraSignupController < ApplicationController
 
     if OrchestraSignup.include_late_registration_fee? && signup.user.orchestra_signup.empty?
       # TODO: end date and DateTime.now < DateTime.parse('2019-04-30 22:00')
-      signup.is_late_registration = true
+      signup.is_late_registration = false
     end
 
     signup.save!
