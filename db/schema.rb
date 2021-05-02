@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210419180726) do
+ActiveRecord::Schema.define(version: 20210502082805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(version: 20210419180726) do
     t.integer  "first_post_id"
     t.integer  "second_post_id"
     t.integer  "third_post_id"
+    t.string   "parnter_id"
     t.integer  "user_id"
     t.string   "workfriend_id"
     t.index ["first_post_id"], name: "index_funkis_applications_on_first_post_id", using: :btree
@@ -421,9 +422,8 @@ ActiveRecord::Schema.define(version: 20210419180726) do
     t.boolean  "allow_password_change",  default: false,                       null: false
     t.uuid     "uuid",                   default: -> { "uuid_generate_v4()" }, null: false
     t.string   "liu_card_number"
-    t.string   "invoice_address"
+    t.string   "pick_up_point"
     t.string   "phone"
-    t.string   "allergies"
     t.index ["email"], name: "index_users_on_email", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree

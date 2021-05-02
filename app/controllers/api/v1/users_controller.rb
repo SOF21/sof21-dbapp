@@ -241,9 +241,8 @@ class API::V1::UsersController < ApplicationController
     params.require(:user).permit(
         :display_name,
         :nickname,
-        :invoice_address,
+        :pick_up_point,
         :phone,
-        :allergies
     )
   end
 
@@ -255,9 +254,8 @@ class API::V1::UsersController < ApplicationController
         :admin_permissions,
         :usergroup,
         :rebate_balance,
-        :invoice_address,
+        :pick_up_point,
         :phone,
-        :allergies
     )
   end
 

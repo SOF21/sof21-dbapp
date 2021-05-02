@@ -63,8 +63,8 @@ class API::V1::ItemCollectController < ApplicationController
     end
   end
 
-  def display_orders
-    users = User.where.not(phone: nil).where.not(invoice_address: nil)
+  def get_orders
+    users = User.where.not(phone: nil).where.not(pick_up_point: nil)
     
     orders = OrderItem.joins(users)
     
