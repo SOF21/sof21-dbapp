@@ -31,6 +31,18 @@ class API::V1::ItemCollectController < ApplicationController
     end
   end
 
+  def user_mail
+    require_admin_permission AdminPermission::TICKETER
+
+    user = User.find_by email: params[:email]
+    
+    if user.present? 
+      render_order_items(user)
+    else
+      render :status => '404', :json => {:message => 'Användare kunde inte hittas'}  
+    end
+  end
+
   def collect
     require_admin_permission AdminPermission::TICKETER
     
@@ -49,6 +61,20 @@ class API::V1::ItemCollectController < ApplicationController
       end    
       render_order_items(user)
     end
+  end
+
+  def get_orders
+    users = User.where.not(phone: nil).where.not(pick_up_point: nil)
+    
+    orders = OrderItem.joins(users)
+    
+    render :json => users, :include => [:owned_items], :except => [
+      :admin_permissions, 
+      :allow_password_change, 
+      :created_at, 
+      :display_name,
+      :liu_card_number,
+    ]
   end
 
   private 

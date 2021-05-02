@@ -14,9 +14,17 @@ class FunkisMailer < ApplicationMailer
     bookings.each do |booking|
       @timeslots << FunkisTimeslot.find(booking.funkis_timeslot_id)
     end
-
-
     mail(to: @funkis.mail, subject: 'SOF21: Bokad till funkis-pass')
+  end
 
+  def funkis_unbooked(funkis)
+    @funkis = funkis
+    @category = FunkisCategory.find(funkis.funkis_category_id)
+    mail(to: @funkis.mail, subject: 'SOF21: Avbokad för funkis-pass')
+  end
+
+  def funkis_deleted(funkis)
+    @funkis = funkis
+    mail(to :@funkis.mail, subject: 'SOF21: Funkisansökan borttagen')
   end
 end
