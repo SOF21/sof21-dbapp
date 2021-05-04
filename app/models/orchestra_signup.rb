@@ -12,8 +12,8 @@ class OrchestraSignup < ApplicationRecord
   DORMITORY = 50
 
   T_SHIRT = 100
-  MEDAL   = 40
-  PATCH   = 20
+  MEDAL   = 50
+  PATCH   = 30
 
   LATE_REGISTRATION = 250
 
@@ -46,10 +46,10 @@ class OrchestraSignup < ApplicationRecord
 
   def total_cost
     cost = 0
-    cost += ticket_price
-    cost += food_ticket_price
-    cost += DORMITORY if dormitory
-    cost += LATE_REGISTRATION if is_late_registration?
+    # cost += ticket_price
+    # cost += food_ticket_price
+    # cost += DORMITORY if dormitory
+    # cost += LATE_REGISTRATION if is_late_registration?
 
     unless orchestra_articles.nil?
       orchestra_articles.each { |x| cost += article_prices[x.kind] * x.data}
