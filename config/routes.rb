@@ -87,6 +87,7 @@ Rails.application.routes.draw do
 
       scope '/store' do
         post '/charge', to: 'payment#charge'
+        get '/secret', to: 'payment#get_client_secret'
       end
 
       scope '/collect' do

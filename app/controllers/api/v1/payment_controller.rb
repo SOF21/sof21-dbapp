@@ -9,16 +9,12 @@ class API::V1::PaymentController < ApplicationController
       if order.cost == 0
         order.complete_free_checkout!
       else
-        created_charge = create_charge!(order)
-        print created_charge
-        order.complete!(created_charge)
+        order.complete!(params[:stripe_id])
       end
       current_user.cart.clear!
       render :status => 200, :json => "Successfully completed order"
-      # redirect_to api_v1_order_url(order)
     else
       render :status => 406, :json => "Empty cart or items that can't be purchased"
-      #head :not_acceptable
     end
   rescue Stripe::CardError => e
     render :status => 400, :json => e.json_body[:error][:message]
@@ -35,12 +31,23 @@ class API::V1::PaymentController < ApplicationController
 
   end
 
+  def get_client_secret 
+    order = current_user.cart.create_order
+    if !current_user.cart.cart_items.empty? && order.purchasable?
+      if order.cost != 0
+        intent = create_charge!(order)
+        print intent
+        render :json => intent[:client_secret].to_json
+      end
+    end
+  end 
+
+
   private
 
   def create_charge!(order)
     customer = Stripe::Customer.create(
         :email => current_user.email,
-        :source => params[:stripe_token],
     )
 
     products = ""
@@ -58,12 +65,13 @@ class API::V1::PaymentController < ApplicationController
       products += "rabattkod(" + order.discount_code.code + ")" "\n"
     end
 
-    Stripe::Charge.create(
+    Stripe::PaymentIntent.create(
         :customer => customer.id,
         :amount => order.cost_in_ore,
         :description => products,
         :currency => 'sek',
+        :receipt_email => current_user.email,
+        metadata: {integration_check: 'accept_a_payment'},
     )
-
   end
 end
