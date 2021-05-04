@@ -21,10 +21,10 @@ class Order < ApplicationRecord
     order_items.sum { |x| x.amount }
   end
 
-  def complete!(stripe_charge)
+  def complete!(id)
     self.payment_method = 'Stripe'
-    self.payment_data = stripe_charge.id
-    self.receipt_url = stripe_charge.receipt_url
+    self.payment_data = id
+    # self.receipt_url = stripe_charge.receipt_url
     save_completed_order!
   end
 
