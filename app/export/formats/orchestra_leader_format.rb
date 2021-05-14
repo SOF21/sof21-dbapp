@@ -45,16 +45,16 @@ module Formats
       {
           :name => 'Namn',
           :email => 'E-mail',
-          :instrument_size => 'Instrument/utrustningsstorlek',
-          :orchestra_ticket => 'Biljett',
-          :dormitory => 'Boende',
-          :tshirt => 'T-shirt',
-          :shirt_size => 'Tröjstorlek',
+          #:instrument_size => 'Instrument/utrustningsstorlek',
+          #:orchestra_ticket => 'Biljett',
+          #:dormitory => 'Boende',
+          #:tshirt => 'T-shirt',
+          #:shirt_size => 'Tröjstorlek',
           :medal => 'Medalj',
           :tag => 'Märke',
-          :orchestra_food_ticket => 'Mat',
-          :is_late_registration => 'Sen anmälan',
-          :total_cost => 'Kostnad'
+          #:orchestra_food_ticket => 'Mat',
+          #:is_late_registration => 'Sen anmälan',
+          #:total_cost => 'Kostnad'
       }
     end
 
