@@ -33,6 +33,7 @@ class API::V1::OrchestraController < ApplicationController
     render :json => orchestra, include: [orchestra_signups: {include: [:user], methods: :total_cost}], methods: :members_count
   end
 
+  ## There is an interesting bug where you have to fetch the .csv twice to get the actual data.
   def all_signups
     orchestra = Orchestra.find(params[:id])
     require_ownership_or_admin_permission orchestra, AdminPermission::ORCHESTRA_ADMIN
