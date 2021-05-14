@@ -50,17 +50,17 @@ module Formats
     def column_names
       {
           :name => 'Orkester',
-          :dormitory => 'Sovsalsdagar',
+          #:dormitory => 'Sovsalsdagar',
           :medal => 'Medaljer',
           :tag => 'Märken',
-          :tshirt => 'T-shirt',
-          :orchestra_ticket => 'Festivalbiljetter',
-          :orchestra_food_ticket => 'Matbiljetter',
-          :is_late_registration => 'Sen anmälan',
+          #:tshirt => 'T-shirt',
+          #:orchestra_ticket => 'Festivalbiljetter',
+          #:orchestra_food_ticket => 'Matbiljetter',
+          #:is_late_registration => 'Sen anmälan',
           :consecutive_10 => '10 år i rad',
           :attended_25 => '25:e året',
           :user_id => 'Kontaktperson',
-          :instrument_size => 'Instrumentstorlek'
+          #:instrument_size => 'Instrumentstorlek'
       }
     end
 
